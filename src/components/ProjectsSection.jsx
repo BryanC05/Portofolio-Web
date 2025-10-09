@@ -3,28 +3,28 @@ import { ArrowRight, ExternalLink, Github } from "lucide-react";
 const projects = [
   {
     id: 1,
-    title: "SaaS Landing Page",
-    description: "A beautiful landing page app using React and Tailwind.",
+    title: "Weather App",
+    description: "Simple Weather App using API, Display Recommend thing to bring.",
     image: "/projects/project1.png",
-    tags: ["React", "TailwindCSS", "Supabase"],
+    tags: ["JS", "CSS", "HTML"],
     demoUrl: "#",
-    githubUrl: "#",
+    githubUrl: "https://github.com/BryanC05/Weather-App",
   },
   {
     id: 2,
-    title: "Orbit Analytics Dashboard",
+    title: "Simple ToDoList",
     description:
-      "Interactive analytics dashboard with data visualization and filtering capabilities.",
+      "ToDoList with date pick, mark done, clear all.",
     image: "/projects/project2.png",
-    tags: ["TypeScript", "D3.js", "Next.js"],
+    tags: ["HTML", "JS", "CSS"],
     demoUrl: "#",
-    githubUrl: "#",
+    githubUrl: "https://github.com/BryanC05/ToDoList",
   },
   {
     id: 3,
-    title: "E-commerce Platform",
+    title: "#",
     description:
-      "Full-featured e-commerce platform with user authentication and payment processing.",
+      "#",
     image: "/projects/project3.png",
     tags: ["React", "Node.js", "Stripe"],
     demoUrl: "#",
