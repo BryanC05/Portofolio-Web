@@ -22,13 +22,13 @@ const projects = [
   },
   {
     id: 3,
-    title: "#",
+    title: "Image Search MERN OAuth",
     description:
-      "#",
+      "Image Search App with user authentication using OAuth and MERN stack.",
     image: "/projects/project3.png",
-    tags: ["React", "Node.js", "Stripe"],
+    tags: ["React", "Node.js"],
     demoUrl: "#",
-    githubUrl: "#",
+    githubUrl: "https://github.com/BryanC05/Image-Search-MERN-OAuth",
   },
 ];
 
