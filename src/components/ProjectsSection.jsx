@@ -6,19 +6,19 @@ const projects = [
     title: "Weather App",
     description: "Simple Weather App using API, Display Recommend thing to bring.",
     image: "/projects/project1.png",
-    tags: ["JS", "CSS", "HTML"],
+    tags: ["API", "JS", "CSS", "HTML"],
     demoUrl: "#",
     githubUrl: "https://github.com/BryanC05/Weather-App",
   },
   {
     id: 2,
-    title: "Simple ToDoList",
+    title: "E-Commerce-Order-Log-System",
     description:
-      "ToDoList with date pick, mark done, clear all.",
+      "A high-performance backend system demonstrating a Hybrid Microservices Architecture.",
     image: "/projects/project2.png",
-    tags: ["HTML", "JS", "CSS"],
+    tags: ["Laravel", "PHP", "HTML", "JS"],
     demoUrl: "#",
-    githubUrl: "https://github.com/BryanC05/ToDoList",
+    githubUrl: "https://github.com/BryanC05/E-Commerce-Order-Log-System",
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ const projects = [
     description:
       "Image Search App with user authentication using OAuth and MERN stack.",
     image: "/projects/project3.png",
-    tags: ["React", "Node.js"],
+    tags: ["OAuth", "API", "React", "Node.js"],
     demoUrl: "#",
     githubUrl: "https://github.com/BryanC05/Image-Search-MERN-OAuth",
   },
