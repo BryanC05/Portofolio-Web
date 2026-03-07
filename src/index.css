@@ -1,91 +1,123 @@
 @import "tailwindcss";
 
 @theme {
-  --color-border: lch(var(--border));
   --color-background: lch(var(--background));
   --color-foreground: lch(var(--foreground));
-
+  --color-card: lch(var(--card));
+  --color-card-foreground: lch(var(--card-foreground));
+  --color-popover: lch(var(--popover));
+  --color-popover-foreground: lch(var(--popover-foreground));
   --color-primary: lch(var(--primary));
   --color-primary-foreground: lch(var(--primary-foreground));
+  --color-secondary: lch(var(--secondary));
+  --color-secondary-foreground: lch(var(--secondary-foreground));
+  --color-muted: lch(var(--muted));
+  --color-muted-foreground: lch(var(--muted-foreground));
+  --color-accent: lch(var(--accent));
+  --color-accent-foreground: lch(var(--accent-foreground));
+  --color-border: lch(var(--border));
+  --color-input: lch(var(--input));
+  --color-ring: lch(var(--ring));
+  --color-destructive: lch(var(--destructive));
+  --color-destructive-foreground: lch(var(--destructive-foreground));
 
-  --color-card: lch(var(--card));
-
-  --animate-float: float 6s ease-in-out infinite;
-  --animate-pulse-subtle: pulse-subtle 4s ease-in-out infinite;
-  --animate-fade-in: fade-in 0.7s ease-out forwards;
-  --animate-fade-in-delay-1: fade-in 0.7s ease-out 0.2s forwards;
-  --animate-fade-in-delay-2: fade-in 0.7s ease-out 0.4s forwards;
-  --animate-fade-in-delay-3: fade-in 0.7s ease-out 0.6s forwards;
-  --animate-fade-in-delay-4: fade-in 0.7s ease-out 0.8s forwards;
-  --animate-meteor: meteor 5s linear infinite;
+  --animate-float: float 10s ease-in-out infinite;
+  --animate-pulse-subtle: pulse-subtle 6s ease-in-out infinite;
+  --animate-fade-in: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-in-delay-1: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.12s forwards;
+  --animate-fade-in-delay-2: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.24s forwards;
+  --animate-fade-in-delay-3: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.36s forwards;
+  --animate-fade-in-delay-4: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.48s forwards;
+  --animate-orbit: orbit 16s linear infinite;
+  --animate-scanline: scanline 12s linear infinite;
+  --animate-grid-pan: grid-pan 22s linear infinite;
 
   @keyframes float {
     0%,
     100% {
-      transform: translateY(0);
+      transform: translate3d(0, 0, 0);
     }
     50% {
-      transform: translateY(-10px);
+      transform: translate3d(0, -10px, 0);
     }
   }
+
   @keyframes pulse-subtle {
     0%,
     100% {
-      opacity: 1;
+      opacity: 0.5;
     }
     50% {
-      opacity: 0.8;
+      opacity: 0.9;
     }
   }
+
   @keyframes fade-in {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translate3d(0, 18px, 0);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: translate3d(0, 0, 0);
     }
   }
-  @keyframes meteor {
-    0% {
-      transform: rotate(215deg) translateX(0);
-      opacity: 1;
+
+  @keyframes orbit {
+    from {
+      transform: rotate(0deg) translateX(18px) rotate(0deg);
     }
-    70% {
-      opacity: 1;
+    to {
+      transform: rotate(360deg) translateX(18px) rotate(-360deg);
+    }
+  }
+
+  @keyframes scanline {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    10%,
+    90% {
+      opacity: 0.22;
     }
     100% {
-      transform: rotate(215deg) translateX(-500px);
+      transform: translateY(100vh);
       opacity: 0;
+    }
+  }
+
+  @keyframes grid-pan {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(32px, 32px, 0);
     }
   }
 }
 
 @layer base {
   :root {
-    /* LCH components: L% C h */
-    --background: 97% 2 250;
-    --foreground: 18% 3 250;
-
-    --card: 100% 0 0;
-
-    --primary: 62% 40 275;
-    --primary-foreground: 98% 2 250;
-
-    --border: 88% 3 250;
-  }
-
-  .dark {
-    --background: 6% 3 250;
-    --foreground: 91% 5 250;
-
-    --card: 10% 3 250;
-
-    --primary: 65% 50 275;
-    --primary-foreground: 91% 5 250;
-
-    --border: 20% 5 250;
+    --background: 10% 8 255;
+    --foreground: 93% 4 235;
+    --card: 16% 7 250;
+    --card-foreground: 94% 4 235;
+    --popover: 12% 7 250;
+    --popover-foreground: 94% 4 235;
+    --primary: 76% 28 220;
+    --primary-foreground: 10% 7 255;
+    --secondary: 23% 6 248;
+    --secondary-foreground: 88% 4 232;
+    --muted: 20% 5 246;
+    --muted-foreground: 72% 4 235;
+    --accent: 82% 20 88;
+    --accent-foreground: 12% 7 255;
+    --border: 31% 7 246;
+    --input: 25% 6 248;
+    --ring: 74% 26 220;
+    --destructive: 62% 24 28;
+    --destructive-foreground: 96% 2 40;
   }
 
   * {
@@ -97,67 +129,176 @@
   }
 
   body {
-    @apply bg-background text-foreground transition-colors duration-300;
+    @apply bg-background text-foreground antialiased;
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
+    background-image:
+      radial-gradient(circle at top, rgba(95, 160, 255, 0.14), transparent 32%),
+      linear-gradient(180deg, rgba(6, 10, 18, 1) 0%, rgba(9, 14, 24, 1) 45%, rgba(7, 11, 18, 1) 100%);
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(circle at center, black 30%, transparent 90%);
+    opacity: 0.35;
+    z-index: -2;
+  }
+
+  ::selection {
+    background: rgba(120, 177, 255, 0.28);
+    color: white;
+  }
+
+  a,
+  button,
+  input,
+  textarea {
+    @apply outline-hidden;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    @apply ring-2 ring-ring ring-offset-2 ring-offset-background;
   }
 }
 
 @utility container {
   margin-inline: auto;
-  padding-inline: 2rem;
+  padding-inline: 1.25rem;
 
   @media (width >= 640px) {
     max-width: 640px;
   }
   @media (width >= 768px) {
     max-width: 768px;
+    padding-inline: 1.5rem;
   }
   @media (width >= 1024px) {
-    max-width: 1024px;
+    max-width: 1100px;
+    padding-inline: 2rem;
   }
   @media (width >= 1280px) {
     max-width: 1280px;
   }
-  @media (width >= 1400px) {
-    max-width: 1400px;
+  @media (width >= 1440px) {
+    max-width: 1380px;
   }
 }
 
 @utility text-glow {
-  @apply relative;
-  text-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
+  text-shadow: 0 0 24px rgba(114, 187, 255, 0.22);
 }
 
-@utility card-hover {
-  @apply transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg;
+@utility text-gradient {
+  background: linear-gradient(135deg, rgba(233, 243, 255, 1) 10%, rgba(113, 184, 255, 1) 55%, rgba(255, 210, 125, 1) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-@utility gradient-border {
-  @apply relative rounded-md;
-  background: linear-gradient(to right, lch(var(--card)), lch(var(--card)));
-  background-clip: padding-box;
-  border: 1px solid transparent;
+@utility hud-panel {
+  @apply relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-card/70 backdrop-blur-xl;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
-@utility cosmic-button {
-  @apply px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium 
-         transition-all duration-300 hover:shadow-[0_0_10px_rgba(139,92,246,0.5)]
-         hover:scale-105 active:scale-95;
+@utility hud-panel-soft {
+  @apply relative overflow-hidden rounded-[1.5rem] border border-white/8 bg-secondary/40 backdrop-blur-md;
 }
 
-@utility star {
-  @apply absolute rounded-full bg-white;
-  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.4);
+@utility hud-grid {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 26px 26px;
 }
 
-@utility meteor {
-  @apply absolute bg-linear-to-r from-white via-white to-transparent rounded-full;
-  box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.3);
+@utility panel-highlight {
+  position: relative;
+}
+
+@utility panel-highlight::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: linear-gradient(145deg, rgba(112, 181, 255, 0.12), transparent 32%, transparent 70%, rgba(255, 203, 112, 0.08));
+  pointer-events: none;
+}
+
+@utility section-eyebrow {
+  @apply inline-flex items-center gap-3 rounded-full border border-white/12 bg-white/5 px-4 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-muted-foreground;
+}
+
+@utility data-pill {
+  @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[0.72rem] uppercase tracking-[0.2em] text-muted-foreground;
+}
+
+@utility action-button {
+  @apply inline-flex items-center justify-center gap-2 rounded-full border border-primary/35 bg-primary/15 px-5 py-3 text-sm font-medium text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:bg-primary/25;
+  box-shadow: 0 12px 35px rgba(80, 140, 255, 0.12);
+}
+
+@utility action-button-secondary {
+  @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-white/5 px-5 py-3 text-sm font-medium text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/8;
+}
+
+@utility panel-line {
+  position: relative;
+}
+
+@utility panel-line::after {
+  content: "";
+  position: absolute;
+  left: 1.25rem;
+  right: 1.25rem;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(117, 188, 255, 0.4), transparent);
+}
+
+@utility motion-panel {
+  @apply transition-transform duration-500 ease-out hover:-translate-y-1;
+}
+
+@utility reveal-up {
+  opacity: 0;
+  animation: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@utility subtle-noise {
+  position: relative;
+}
+
+@utility subtle-noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.055) 0.7px, transparent 0.7px);
+  background-size: 14px 14px;
+  opacity: 0.08;
+  mix-blend-mode: screen;
+  pointer-events: none;
 }
 
 #root {
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 0;
-  text-align: center;
+  min-height: 100vh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
