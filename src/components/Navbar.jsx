@@ -3,11 +3,11 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const navItems = [
-  { name: "Home", href: "#hero" },
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
-  { name: "Contact", href: "#contact" },
+  { name: "Overview", href: "#hero" },
+  { name: "Profile", href: "#about" },
+  { name: "Systems", href: "#skills" },
+  { name: "Operations", href: "#projects" },
+  { name: "Comms", href: "#contact" },
 ];
 
 export const Navbar = () => {
@@ -16,74 +16,106 @@ export const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.screenY > 10);
+      setIsScrolled(window.scrollY > 20);
     };
 
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
-    <nav
-      className={cn(
-        "fixed w-full z-40 transition-all duration-300",
-        isScrolled ? "py-3 bg-background/80 backdrop-blur-md shadow-xs" : "py-5"
-      )}
-    >
-      <div className="container flex items-center justify-between">
-        <a
-          className="text-xl font-bold text-primary flex items-center"
-          href="#hero"
-        >
-          <span className="relative z-10">
-            <span className="text-glow text-foreground"> Bryan </span>{" "}
-            Portfolio
-          </span>
-        </a>
-
-        {/* desktop nav */}
-        <div className="hidden md:flex space-x-8">
-          {navItems.map((item, key) => (
-            <a
-              key={key}
-              href={item.href}
-              className="text-foreground/80 hover:text-primary transition-colors duration-300"
-            >
-              {item.name}
-            </a>
-          ))}
-        </div>
-
-        {/* mobile nav */}
-
-        <button
-          onClick={() => setIsMenuOpen((prev) => !prev)}
-          className="md:hidden p-2 text-foreground z-50"
-          aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}{" "}
-        </button>
-
+    <nav className="fixed inset-x-0 top-0 z-50 px-4 py-4">
+      <div
+        className={cn(
+          "container transition-all duration-500",
+          isScrolled ? "translate-y-0" : "translate-y-0"
+        )}
+      >
         <div
           className={cn(
-            "fixed inset-0 bg-background/95 backdroup-blur-md z-40 flex flex-col items-center justify-center",
-            "transition-all duration-300 md:hidden",
-            isMenuOpen
-              ? "opacity-100 pointer-events-auto"
-              : "opacity-0 pointer-events-none"
+            "mx-auto flex items-center justify-between gap-4 rounded-full border px-4 py-3 md:px-6",
+            "bg-background/55 backdrop-blur-xl",
+            isScrolled
+              ? "border-white/14 shadow-[0_20px_50px_rgba(0,0,0,0.28)]"
+              : "border-white/10"
           )}
         >
-          <div className="flex flex-col space-y-8 text-xl">
-            {navItems.map((item, key) => (
+          <a href="#hero" className="flex items-center gap-3 text-left">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
+              BC
+            </span>
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+                Endfield-inspired
+              </p>
+              <p className="text-sm font-semibold tracking-[0.16em] text-foreground sm:text-base">
+                Bryan Chan
+              </p>
+            </div>
+          </a>
+
+          <div className="hidden items-center gap-2 lg:flex">
+            {navItems.map((item) => (
               <a
-                key={key}
+                key={item.name}
                 href={item.href}
-                className="text-foreground/80 hover:text-primary transition-colors duration-300"
-                onClick={() => setIsMenuOpen(false)}
+                className="rounded-full px-4 py-2 text-sm text-muted-foreground transition-all duration-300 hover:bg-white/7 hover:text-foreground"
               >
                 {item.name}
               </a>
             ))}
           </div>
+
+          <div className="hidden items-center gap-3 md:flex">
+            <span className="data-pill">
+              <span className="h-2 w-2 rounded-full bg-emerald-400" />
+              Available for select work
+            </span>
+            <a href="#contact" className="action-button">
+              Open Channel
+            </a>
+          </div>
+
+          <button
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-white/5 text-foreground transition-colors hover:bg-white/10 md:hidden"
+            aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+          >
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+      </div>
+
+      <div
+        className={cn(
+          "absolute inset-x-4 top-[calc(100%+0.5rem)] origin-top rounded-[1.5rem] border border-white/10 bg-background/92 p-5 backdrop-blur-xl transition-all duration-300 md:hidden",
+          isMenuOpen
+            ? "pointer-events-auto scale-100 opacity-100"
+            : "pointer-events-none scale-95 opacity-0"
+        )}
+      >
+        <div className="space-y-2">
+          {navItems.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              className="flex items-center justify-between rounded-2xl border border-transparent bg-white/4 px-4 py-3 text-sm text-foreground/90 transition-all hover:border-white/10 hover:bg-white/8"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <span>{item.name}</span>
+              <span className="text-xs uppercase tracking-[0.24em] text-muted-foreground">
+                Go
+              </span>
+            </a>
+          ))}
+          <a
+            href="#contact"
+            className="mt-3 flex items-center justify-center rounded-full border border-primary/30 bg-primary/12 px-4 py-3 text-sm font-medium text-foreground"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Open Channel
+          </a>
         </div>
       </div>
     </nav>

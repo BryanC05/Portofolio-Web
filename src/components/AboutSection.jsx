@@ -1,95 +1,94 @@
-import { Briefcase, Code, User } from "lucide-react";
+import { BriefcaseBusiness, Layers3, Sparkles, Waypoints } from "lucide-react";
+import { Panel } from "@/components/Panel";
+import { SectionShell } from "@/components/SectionShell";
+
+const capabilities = [
+  {
+    title: "Interface Engineering",
+    description:
+      "Responsive frontend systems built with durable component architecture, clean interaction states, and performance in mind.",
+    icon: Layers3,
+  },
+  {
+    title: "Product Experience",
+    description:
+      "Translating abstract ideas into intuitive page flows, information hierarchy, and polished visual rhythm.",
+    icon: Sparkles,
+  },
+  {
+    title: "Delivery Discipline",
+    description:
+      "From prototyping to implementation, I keep scope clear, move deliberately, and optimize for shippable outcomes.",
+    icon: BriefcaseBusiness,
+  },
+];
+
+const markers = ["Frontend-first", "Design-aware", "Fast iteration", "Collaborative workflow"];
 
 export const AboutSection = () => {
   return (
-    <section id="about" className="py-24 px-4 relative">
-      {" "}
-      <div className="container mx-auto max-w-5xl">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-          About <span className="text-primary"> Me</span>
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
-            <h3 className="text-2xl font-semibold">
-              Passionate Web Developer & Tech Creator
-            </h3>
-
-            <p className="text-muted-foreground">
-              With over 5 years of experience in web development, I specialize
-              in creating responsive, accessible, and performant web
-              applications using modern technologies.
-            </p>
-
-            <p className="text-muted-foreground">
-              I'm passionate about creating elegant solutions to complex
-              problems, and I'm constantly learning new technologies and
-              techniques to stay at the forefront of the ever-evolving web
-              landscape.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
-              <a href="#contact" className="cosmic-button">
-                {" "}
-                Get In Touch
+    <SectionShell
+      id="about"
+      eyebrow="Profile dossier"
+      title="Built for teams that need"
+      accent="clarity under complexity"
+      description="I approach portfolio and product work like a systems problem: define the signal, shape the interface around it, and refine the experience until it feels precise."
+    >
+      <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+        <Panel className="motion-panel p-6 md:p-8">
+          <div className="panel-line space-y-6 pt-6">
+            <div className="flex items-center gap-3 text-sm uppercase tracking-[0.25em] text-muted-foreground">
+              <Waypoints size={16} className="text-primary" />
+              Operational philosophy
+            </div>
+            <div className="space-y-5 text-left">
+              <h3 className="text-2xl font-semibold tracking-[-0.04em] text-foreground md:text-3xl">
+                Premium interfaces should feel engineered, not merely decorated.
+              </h3>
+              <p className="leading-7 text-muted-foreground">
+                My work centers on the overlap between frontend development and visual composition.
+                I enjoy building pages that read instantly, move smoothly, and reinforce the product story
+                through structure—not just styling.
+              </p>
+              <p className="leading-7 text-muted-foreground">
+                Whether the project is a landing page, dashboard, or application surface, I aim to deliver
+                layouts that hold up across breakpoints and interaction states while staying easy to extend.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {markers.map((marker) => (
+                <span key={marker} className="data-pill">
+                  {marker}
+                </span>
+              ))}
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <a href="#contact" className="action-button">
+                Discuss a project
               </a>
-
-              <a
-                href=""
-                className="px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary/10 transition-colors duration-300"
-              >
-                Download CV
+              <a href="https://github.com/BryanC05" target="_blank" rel="noreferrer" className="action-button-secondary">
+                Browse code archive
               </a>
             </div>
           </div>
+        </Panel>
 
-          <div className="grid grid-cols-1 gap-6">
-            <div className="gradient-border p-6 card-hover">
-              <div className="flex items-start gap-4">
-                <div className="p-3 rounded-full bg-primary/10">
-                  <Code className="h-6 w-6 text-primary" />
+        <div className="grid gap-5">
+          {capabilities.map(({ title, description, icon: Icon }) => (
+            <Panel key={title} className="motion-panel p-6">
+              <div className="flex items-start gap-4 text-left">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/25 bg-primary/10 text-primary">
+                  <Icon size={22} />
                 </div>
-                <div className="text-left">
-                  <h4 className="font-semibold text-lg"> Web Development</h4>
-                  <p className="text-muted-foreground">
-                    Creating responsive websites and web applications with
-                    modern frameworks.
-                  </p>
+                <div className="space-y-2">
+                  <h4 className="text-lg font-semibold tracking-[-0.02em] text-foreground">{title}</h4>
+                  <p className="leading-7 text-muted-foreground">{description}</p>
                 </div>
               </div>
-            </div>
-            <div className="gradient-border p-6 card-hover">
-              <div className="flex items-start gap-4">
-                <div className="p-3 rounded-full bg-primary/10">
-                  <User className="h-6 w-6 text-primary" />
-                </div>
-                <div className="text-left">
-                  <h4 className="font-semibold text-lg">UI/UX Design</h4>
-                  <p className="text-muted-foreground">
-                    Designing intuitive user interfaces and seamless user
-                    experiences.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="gradient-border p-6 card-hover">
-              <div className="flex items-start gap-4">
-                <div className="p-3 rounded-full bg-primary/10">
-                  <Briefcase className="h-6 w-6 text-primary" />
-                </div>
-
-                <div className="text-left">
-                  <h4 className="font-semibold text-lg">Project Management</h4>
-                  <p className="text-muted-foreground">
-                    Leading projects from conception to completion with agile
-                    methodologies.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+            </Panel>
+          ))}
         </div>
       </div>
-    </section>
+    </SectionShell>
   );
 };

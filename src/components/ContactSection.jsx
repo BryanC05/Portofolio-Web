@@ -1,191 +1,188 @@
-import {
-  Instagram,
-  Linkedin,
-  Mail,
-  MapPin,
-  Phone,
-  Send,
-  Twitch,
-  Twitter,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useToast } from "@/hooks/use-toast";
+import { Instagram, Linkedin, Mail, MapPin, Phone, Send } from "lucide-react";
 import { useState } from "react";
+import { Panel } from "@/components/Panel";
+import { SectionShell } from "@/components/SectionShell";
+import { useToast } from "@/hooks/use-toast";
+
+const contactMethods = [
+  {
+    label: "Primary mail",
+    value: "05bryanchan05@gmail.com",
+    href: "mailto:05bryanchan05@gmail.com",
+    icon: Mail,
+  },
+  {
+    label: "Direct line",
+    value: "+62 855-9167-6171",
+    href: "tel:+6285591676171",
+    icon: Phone,
+  },
+  {
+    label: "Location",
+    value: "Bekasi, Harapan Indah",
+    href: "#contact",
+    icon: MapPin,
+  },
+];
+
+const socialLinks = [
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/bryan-chan-824658230/",
+    icon: Linkedin,
+  },
+  {
+    name: "GitHub",
+    href: "https://github.com/BryanC05",
+    icon: Send,
+  },
+  {
+    name: "Instagram",
+    href: "#",
+    icon: Instagram,
+  },
+];
 
 export const ContactSection = () => {
   const { toast } = useToast();
+  const [formState, setFormState] = useState({ name: "", email: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState((previous) => ({ ...previous, [name]: value }));
+  };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
     setIsSubmitting(true);
 
-    setTimeout(() => {
+    window.setTimeout(() => {
       toast({
-        title: "Message sent!",
-        description: "Thank you for your message. I'll get back to you soon.",
+        title: "Transmission received",
+        description: "Thanks for reaching out. I’ll follow up through your provided contact channel.",
       });
+      setFormState({ name: "", email: "", message: "" });
       setIsSubmitting(false);
-    }, 1500);
+    }, 1200);
   };
+
   return (
-    <section
+    <SectionShell
       id="contact"
-      className="min-h-screen flex items-center justify-center px-4 relative bg-secondary/30"
+      eyebrow="Communications"
+      title="If you’re planning the next"
+      accent="high-impact build"
+      description="I’m open to collaborating on portfolio refreshes, landing pages, and interface-heavy products that need sharper visual systems and dependable frontend execution."
+      className="pb-28"
     >
-      <div className="container mx-auto max-w-5xl">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
-          Get In <span className="text-primary"> Touch</span>
-        </h2>
-
-        <p className="text-center text-muted-foreground mb-12 ">
-          Have a project in mind or want to collaborate? Feel free to reach out.
-          I'm always open to discussing new opportunities.
-        </p>
-
-  <div className="flex items-center justify-center min-h-[40vh] w-full">
-    <div className="mx-auto max-w-2xl flex flex-col items-center justify-center text-center space-y-8">
-            <h3 className="text-2xl font-semibold mb-6 text-center">
-              {" "}
-              Contact Information
-            </h3>
-
-            <div className="space-y-6 w-full">
-              <div className="flex items-center justify-center space-x-4">
-                <div className="p-3 rounded-full bg-primary/10">
-                  <Mail className="h-6 w-6 text-primary" />{" "}
-                </div>
-                <div>
-                  <h4 className="font-medium text-center">Email</h4>
-                  <a
-                    href="mailto:hello@gmail.com"
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    05bryanchan05@gmail.com
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-center justify-center space-x-4">
-                <div className="p-3 rounded-full bg-primary/10">
-                  <Phone className="h-6 w-6 text-primary" />{" "}
-                </div>
-                <div>
-                  <h4 className="font-medium text-center">Phone</h4>
-                  <a
-                    href="tel:+11234567890"
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    +62 855-9167-6171
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-center justify-center space-x-4">
-                <div className="p-3 rounded-full bg-primary/10">
-                  <MapPin className="h-6 w-6 text-primary" />{" "}
-                </div>
-                <div>
-                  <h4 className="font-medium text-center">Location</h4>
-                  <a className="text-muted-foreground hover:text-primary transition-colors">
-                    Bekasi, Harapan Indah
-                  </a>
-                </div>
-              </div>
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <Panel className="motion-panel p-6 md:p-8">
+          <div className="panel-line space-y-6 pt-6 text-left">
+            <div>
+              <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Open channel</p>
+              <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-foreground md:text-3xl">
+                Let’s turn a rough direction into a polished interface.
+              </h3>
             </div>
 
-            <div className="pt-8">
-              <h4 className="font-medium mb-4 "> Connect With Me</h4>
-              <div className="flex space-x-4 justify-center">
-                <a href="https://www.linkedin.com/in/bryan-chan-824658230/" target="_blank">
-                  <Linkedin />
+            <div className="space-y-4">
+              {contactMethods.map(({ label, value, href, icon: Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  className="flex items-center gap-4 rounded-[1.3rem] border border-white/8 bg-white/[0.03] p-4 transition-colors hover:border-primary/25 hover:bg-primary/6"
+                >
+                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 text-primary">
+                    <Icon size={20} />
+                  </span>
+                  <span>
+                    <span className="block text-[0.7rem] uppercase tracking-[0.22em] text-muted-foreground">{label}</span>
+                    <span className="mt-1 block text-sm font-medium text-foreground">{value}</span>
+                  </span>
                 </a>
-                <a href="#" target="_blank">
-                  <Twitter />
+              ))}
+            </div>
+
+            <div className="rounded-[1.5rem] border border-white/8 bg-white/[0.03] p-5">
+              <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">Availability</p>
+              <p className="mt-3 text-sm leading-7 text-foreground">
+                Currently open to freelance opportunities, collaborative product work, and landing page redesigns with a strong visual direction.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              {socialLinks.map(({ name, href, icon: Icon }) => (
+                <a
+                  key={name}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="data-pill transition-colors hover:border-primary/35 hover:text-foreground"
+                >
+                  <Icon size={14} /> {name}
                 </a>
-                <a href="#" target="_blank">
-                  <Instagram />
-                </a>
-                {/* <a href="#" target="_blank">
-                  <Twitch />
-                </a> */}
-              </div>
+              ))}
             </div>
           </div>
+        </Panel>
 
-          {/* <div
-            className="bg-card p-8 rounded-lg shadow-xs"
-            onSubmit={handleSubmit}
-          > */}
-            {/* <h3 className="text-2xl font-semibold mb-6"> Send a Message</h3> */}
+        <Panel className="motion-panel p-6 md:p-8">
+          <form onSubmit={handleSubmit} className="panel-line space-y-5 pt-6 text-left">
+            <div>
+              <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Message relay</p>
+              <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-foreground">
+                Send a project brief.
+              </h3>
+            </div>
 
-            {/* <form className="space-y-6">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium mb-2"
-                >
-                  {" "}
-                  Your Name
-                </label>
+            <div className="grid gap-5 sm:grid-cols-2">
+              <label className="space-y-2 text-sm text-muted-foreground">
+                <span>Name</span>
                 <input
                   type="text"
-                  id="name"
                   name="name"
+                  value={formState.name}
+                  onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-primary"
-                  placeholder="Your name..."
+                  placeholder="Your name"
+                  className="w-full rounded-2xl border border-input bg-background/80 px-4 py-3 text-foreground placeholder:text-muted-foreground/70"
                 />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium mb-2"
-                >
-                  {" "}
-                  Your Email
-                </label>
+              </label>
+              <label className="space-y-2 text-sm text-muted-foreground">
+                <span>Email</span>
                 <input
                   type="email"
-                  id="email"
                   name="email"
+                  value={formState.email}
+                  onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-primary"
-                  placeholder="john@gmail.com"
+                  placeholder="name@example.com"
+                  className="w-full rounded-2xl border border-input bg-background/80 px-4 py-3 text-foreground placeholder:text-muted-foreground/70"
                 />
-              </div>
+              </label>
+            </div>
 
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium mb-2"
-                >
-                  {" "}
-                  Your Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-primary resize-none"
-                  placeholder="Hello, I'd like to talk about..."
-                />
-              </div>
+            <label className="block space-y-2 text-sm text-muted-foreground">
+              <span>Mission brief</span>
+              <textarea
+                name="message"
+                value={formState.message}
+                onChange={handleChange}
+                required
+                rows={7}
+                placeholder="Share the product, timeline, and type of experience you want to build."
+                className="w-full resize-none rounded-[1.5rem] border border-input bg-background/80 px-4 py-3 text-foreground placeholder:text-muted-foreground/70"
+              />
+            </label>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={cn(
-                  "cosmic-button w-full flex items-center justify-center gap-2"
-                )}
-              >
-                {isSubmitting ? "Sending..." : "Send Message"}
-                <Send size={16} />
-              </button>
-            </form> */}
-          </div>
-        </div>
-      {/* </div> */}
-    </section>
+            <button type="submit" disabled={isSubmitting} className="action-button w-full sm:w-auto">
+              {isSubmitting ? "Transmitting..." : "Transmit message"}
+              <Send size={16} />
+            </button>
+          </form>
+        </Panel>
+      </div>
+    </SectionShell>
   );
 };
