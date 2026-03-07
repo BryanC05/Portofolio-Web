@@ -222,15 +222,15 @@
 
 @utility panel-highlight {
   position: relative;
-}
 
-@utility panel-highlight::before {
-  content: "";
-  position: absolute;
-  inset: 1px;
-  border-radius: inherit;
-  background: linear-gradient(145deg, rgba(112, 181, 255, 0.12), transparent 32%, transparent 70%, rgba(255, 203, 112, 0.08));
-  pointer-events: none;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: inherit;
+    background: linear-gradient(145deg, rgba(112, 181, 255, 0.12), transparent 32%, transparent 70%, rgba(255, 203, 112, 0.08));
+    pointer-events: none;
+  }
 }
 
 @utility section-eyebrow {
@@ -252,16 +252,16 @@
 
 @utility panel-line {
   position: relative;
-}
 
-@utility panel-line::after {
-  content: "";
-  position: absolute;
-  left: 1.25rem;
-  right: 1.25rem;
-  top: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(117, 188, 255, 0.4), transparent);
+  &::after {
+    content: "";
+    position: absolute;
+    left: 1.25rem;
+    right: 1.25rem;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(117, 188, 255, 0.4), transparent);
+  }
 }
 
 @utility motion-panel {
@@ -275,17 +275,17 @@
 
 @utility subtle-noise {
   position: relative;
-}
 
-@utility subtle-noise::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.055) 0.7px, transparent 0.7px);
-  background-size: 14px 14px;
-  opacity: 0.08;
-  mix-blend-mode: screen;
-  pointer-events: none;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.055) 0.7px, transparent 0.7px);
+    background-size: 14px 14px;
+    opacity: 0.08;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
 }
 
 #root {
