@@ -5,8 +5,8 @@ import { SectionShell } from "@/components/SectionShell";
 
 const skillSets: Record<string, Array<{ name: string; category: string; level: number; note: string }>> = {
   all: [
-    { name: "React & SPA Systems", category: "frontend", level: 92, note: "Component architecture, state flow, composable UI sections" },
-    { name: "Tailwind & Design Systems", category: "frontend", level: 90, note: "Token-based styling, responsive polish, scalable utility patterns" },
+    { name: "Frontend Development", category: "frontend", level: 92, note: "Component architecture, state flow, composable UI sections" },
+    { name: "Styling & UI Systems", category: "frontend", level: 90, note: "CSS-in-JS, Tailwind, design systems, responsive polish" },
     { name: "JavaScript / TypeScript", category: "frontend", level: 88, note: "Interactive logic, maintainable patterns, modern tooling" },
     { name: "Node & API Integration", category: "backend", level: 78, note: "Service wiring, auth-aware features, pragmatic backend support" },
     { name: "Data & Persistence", category: "backend", level: 72, note: "MongoDB, PostgreSQL, schema-aware implementation choices" },
@@ -14,9 +14,9 @@ const skillSets: Record<string, Array<{ name: string; category: string; level: n
   ],
   frontend: [
     { name: "React", category: "frontend", level: 92, note: "Reusable components, routing, dynamic UI composition" },
-    { name: "Tailwind CSS", category: "frontend", level: 90, note: "Design token systems, custom utilities, responsive styling" },
-    { name: "Next.js", category: "frontend", level: 78, note: "App-like landing pages, performant rendering, structured layouts" },
-    { name: "Motion Design", category: "frontend", level: 84, note: "Hover states, reveal choreography, tactile interface feedback" },
+    { name: "Tailwind CSS", category: "frontend", level: 90, note: "Design systems, custom utilities, responsive styling" },
+    { name: "Next.js", category: "frontend", level: 78, note: "Server-side rendering, performant layouts, SEO optimization" },
+    { name: "Motion Design", category: "frontend", level: 84, note: "Tactile interface feedback, smooth transitions, reveal choreography" },
   ],
   backend: [
     { name: "Node.js", category: "backend", level: 78, note: "Supporting APIs, project services, backend integration work" },
@@ -25,7 +25,7 @@ const skillSets: Record<string, Array<{ name: string; category: string; level: n
     { name: "Authentication", category: "backend", level: 70, note: "OAuth flows and user access considerations in app projects" },
   ],
   tools: [
-    { name: "GitHub Workflow", category: "tools", level: 88, note: "Version control, collaboration, and portfolio deployment habits" },
+    { name: "GitHub Workflow", category: "tools", level: 88, note: "Version control, collaboration, and project deployment habits" },
     { name: "Figma", category: "tools", level: 82, note: "Layout planning, visual references, design-development alignment" },
     { name: "Docker", category: "tools", level: 68, note: "Container basics for local parity and simpler service setup" },
     { name: "Developer Tooling", category: "tools", level: 87, note: "Vite, VS Code, structured iteration, and fast debugging loops" },
@@ -61,10 +61,10 @@ export const SkillsSection = () => {
   return (
     <SectionShell
       id="skills"
-      eyebrow="Systems dashboard"
+      eyebrow="Skills & Tools"
       title="A toolkit shaped for"
       accent="production-ready interfaces"
-      description="Rather than chasing every framework equally, I focus on a practical stack that helps me design, build, and refine high-impact web experiences."
+      description="I focus on a practical stack that helps me design, build, and refine high-impact web applications."
       className="bg-muted/30 dark:bg-muted/5"
     >
       <div className="space-y-8">
@@ -120,9 +120,9 @@ export const SkillsSection = () => {
           <Panel className="motion-panel p-6 md:p-8">
             <div className="panel-line space-y-6 pt-6 text-left">
               <div>
-                <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Workflow signature</p>
+                <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Workflow approach</p>
                 <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-foreground">
-                  Strong visual systems, grounded implementation choices.
+                  High-quality user interfaces, grounded implementation choices.
                 </h3>
               </div>
               <div className="space-y-4">

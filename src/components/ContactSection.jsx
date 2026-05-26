@@ -1,4 +1,4 @@
-import { Instagram, Linkedin, Mail, MapPin, Phone, Send } from "lucide-react";
+import { Linkedin, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
 import { useState } from "react";
 import { Panel } from "@/components/Panel";
 import { SectionShell } from "@/components/SectionShell";
@@ -7,8 +7,8 @@ import { useToast } from "@/hooks/use-toast";
 const contactMethods = [
   {
     label: "Primary mail",
-    value: "05bryanchan05@gmail.com",
-    href: "mailto:05bryanchan05@gmail.com",
+    value: "becejob@gmail.com",
+    href: "mailto:becejob@gmail.com",
     icon: Mail,
   },
   {
@@ -28,7 +28,7 @@ const contactMethods = [
 const socialLinks = [
   {
     name: "LinkedIn",
-    href: "https://www.linkedin.com/in/bryan-chan-824658230/",
+    href: "https://www.linkedin.com/in/bryan-chan-9705013a9/",
     icon: Linkedin,
   },
   {
@@ -37,9 +37,9 @@ const socialLinks = [
     icon: Send,
   },
   {
-    name: "Instagram",
-    href: "#",
-    icon: Instagram,
+    name: "WhatsApp",
+    href: "https://wa.me/6285591676171",
+    icon: MessageCircle,
   },
 ];
 
@@ -53,36 +53,55 @@ export const ContactSection = () => {
     setFormState((previous) => ({ ...previous, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setIsSubmitting(true);
 
-    window.setTimeout(() => {
-      toast({
-        title: "Transmission received",
-        description: "Thanks for reaching out. I’ll follow up through your provided contact channel.",
+    try {
+      const response = await fetch("https://formspree.io/f/xkoeqkgp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formState),
       });
-      setFormState({ name: "", email: "", message: "" });
+
+      if (response.ok) {
+        toast({
+          title: "Message sent",
+          description: "Thanks for reaching out! I'll get back to you at becejob@gmail.com soon.",
+        });
+        setFormState({ name: "", email: "", message: "" });
+      } else {
+        throw new Error("Failed to send message");
+      }
+    } catch (error) {
+      toast({
+        title: "Submission failed",
+        description: "There was an error sending your message. Please try again or email me directly.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1200);
+    }
   };
 
   return (
     <SectionShell
       id="contact"
-      eyebrow="Communications"
-      title="If you’re planning the next"
-      accent="high-impact build"
-      description="I’m open to collaborating on portfolio refreshes, landing pages, and interface-heavy products that need sharper visual systems and dependable frontend execution."
+      eyebrow="Contact"
+      title="If you’re planning your next"
+      accent="web project"
+      description="I’m open to collaborating on web applications, landing pages, and interface-heavy products that need sharper visual design and dependable frontend execution."
       className="pb-28"
     >
       <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
         <Panel className="motion-panel p-6 md:p-8">
           <div className="panel-line space-y-6 pt-6 text-left">
             <div>
-              <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Open channel</p>
+              <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Get in touch</p>
               <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-foreground md:text-3xl">
-                Let’s turn a rough direction into a polished interface.
+                Let’s turn your idea into a polished digital experience.
               </h3>
             </div>
 
@@ -107,7 +126,7 @@ export const ContactSection = () => {
             <div className="rounded-[1.5rem] border border-white/8 bg-white/[0.03] p-5">
               <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">Availability</p>
               <p className="mt-3 text-sm leading-7 text-foreground">
-                Currently open to freelance opportunities, collaborative product work, and landing page redesigns with a strong visual direction.
+                Currently open to freelance opportunities, part-time roles, and project-based work with a focus on web development.
               </p>
             </div>
 
@@ -130,9 +149,9 @@ export const ContactSection = () => {
         <Panel className="motion-panel p-6 md:p-8">
           <form onSubmit={handleSubmit} className="panel-line space-y-5 pt-6 text-left">
             <div>
-              <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Message relay</p>
+              <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Send a message</p>
               <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-foreground">
-                Send a project brief.
+                Let's discuss your project.
               </h3>
             </div>
 
@@ -164,20 +183,20 @@ export const ContactSection = () => {
             </div>
 
             <label className="block space-y-2 text-sm text-muted-foreground">
-              <span>Mission brief</span>
+              <span>Message</span>
               <textarea
                 name="message"
                 value={formState.message}
                 onChange={handleChange}
                 required
                 rows={7}
-                placeholder="Share the product, timeline, and type of experience you want to build."
+                placeholder="Share your project details, timeline, or any questions you have."
                 className="w-full resize-none rounded-[1.5rem] border border-input bg-background/80 px-4 py-3 text-foreground placeholder:text-muted-foreground/70"
               />
             </label>
 
             <button type="submit" disabled={isSubmitting} className="action-button w-full sm:w-auto">
-              {isSubmitting ? "Transmitting..." : "Transmit message"}
+              {isSubmitting ? "Sending..." : "Send message"}
               <Send size={16} />
             </button>
           </form>

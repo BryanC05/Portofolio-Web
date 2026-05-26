@@ -6,7 +6,7 @@ const capabilities = [
   {
     title: "Interface Engineering",
     description:
-      "Responsive frontend systems built with durable component architecture, clean interaction states, and performance in mind.",
+      "Modern web applications built with durable component architecture, clean interaction states, and performance in mind.",
     icon: Layers3,
   },
   {
@@ -29,17 +29,17 @@ export const AboutSection = () => {
   return (
     <SectionShell
       id="about"
-      eyebrow="Profile dossier"
+      eyebrow="About Me"
       title="Built for teams that need"
       accent="clarity under complexity"
-      description="I approach portfolio and product work like a systems problem: define the signal, shape the interface around it, and refine the experience until it feels precise."
+      description="I approach portfolio and product work like a development challenge: define the signal, shape the interface around it, and refine the experience until it feels precise."
     >
       <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
         <Panel className="motion-panel p-6 md:p-8">
           <div className="panel-line space-y-6 pt-6">
             <div className="flex items-center gap-3 text-sm uppercase tracking-[0.25em] text-muted-foreground">
               <Waypoints size={16} className="text-primary" />
-              Operational philosophy
+              Work philosophy
             </div>
             <div className="space-y-5 text-left">
               <h3 className="text-2xl font-semibold tracking-[-0.04em] text-foreground md:text-3xl">

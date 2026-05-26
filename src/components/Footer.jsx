@@ -25,7 +25,7 @@ export const Footer = () => {
           </div>
         </div>
         <p className="mt-4 text-center text-xs uppercase tracking-[0.24em] text-muted-foreground">
-          © {new Date().getFullYear()} Bryan Chan · Portfolio transmission active
+          © {new Date().getFullYear()} Bryan Chan · Available for new projects
         </p>
       </div>
     </footer>

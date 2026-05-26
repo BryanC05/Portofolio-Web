@@ -3,11 +3,10 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const navItems = [
-  { name: "Overview", href: "#hero" },
-  { name: "Profile", href: "#about" },
-  { name: "Systems", href: "#skills" },
-  { name: "Operations", href: "#projects" },
-  { name: "Comms", href: "#contact" },
+  { name: "About", href: "#about" },
+  { name: "Skills", href: "#skills" },
+  { name: "Projects", href: "#projects" },
+  { name: "Contact", href: "#contact" },
 ];
 
 export const Navbar = () => {
@@ -46,9 +45,6 @@ export const Navbar = () => {
               BC
             </span>
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-                Endfield-inspired
-              </p>
               <p className="text-sm font-semibold tracking-[0.16em] text-foreground sm:text-base">
                 Bryan Chan
               </p>
@@ -70,10 +66,10 @@ export const Navbar = () => {
           <div className="hidden items-center gap-3 md:flex">
             <span className="data-pill">
               <span className="h-2 w-2 rounded-full bg-emerald-400" />
-              Available for select work
+              Available for projects
             </span>
             <a href="#contact" className="action-button">
-              Open Channel
+              Get in Touch
             </a>
           </div>
 
@@ -105,7 +101,7 @@ export const Navbar = () => {
             >
               <span>{item.name}</span>
               <span className="text-xs uppercase tracking-[0.24em] text-muted-foreground">
-                Go
+                View
               </span>
             </a>
           ))}
@@ -114,7 +110,7 @@ export const Navbar = () => {
             className="mt-3 flex items-center justify-center rounded-full border border-primary/30 bg-primary/12 px-4 py-3 text-sm font-medium text-foreground"
             onClick={() => setIsMenuOpen(false)}
           >
-            Open Channel
+            Get in Touch
           </a>
         </div>
       </div>

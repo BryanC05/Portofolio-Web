@@ -1,40 +1,78 @@
-import { ArrowRight, ExternalLink, Github } from "lucide-react";
+import { ArrowRight, ExternalLink, Github, Info } from "lucide-react";
 import { Panel } from "@/components/Panel";
 import { SectionShell } from "@/components/SectionShell";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const projects = [
   {
     id: 1,
-    title: "Image Search MERN OAuth",
+    title: "Dagangly",
     description:
-      "A MERN-based image search application with OAuth authentication, focused on account-aware flows and a responsive search experience.",
-    image: "/projects/project3.png",
-    tags: ["React", "Node.js", "OAuth", "API"],
+      "Dagangly is a comprehensive, multi-platform e-commerce ecosystem designed to connect local buyers with Micro, Small, and Medium Enterprises (MSMEs/UMKM). The platform provides robust tools for sellers to manage their business, automate workflows, and reach customers, while offering buyers a highly accessible, modern, and secure shopping experience.",
+    details: {
+      stack: [
+        {
+          category: "Frontend (Web)",
+          items: [
+            "Framework: React.js (Vite)",
+            "Styling: Tailwind CSS",
+            "Features: PWA Support, Responsive Design, Accessibility-First",
+          ],
+        },
+        {
+          category: "Mobile App",
+          items: [
+            "Framework: React Native (Expo)",
+            "Distribution: Android EAS Build (APK & AAB)",
+            "Features: Google Maps, Firebase Push Notifications, Biometrics",
+          ],
+        },
+        {
+          category: "Backend & Database",
+          items: [
+            "Language: Go (Golang) with Gin framework",
+            "MongoDB: Main application data",
+            "PostgreSQL: n8n workflow engine persistence",
+            "Storage: AWS S3 / Cloudinary for persistent uploads",
+          ],
+        },
+      ],
+      setup: ["Docker & Docker Compose", "Node.js 18+", "Go 1.20+", "MongoDB"],
+    },
+    image: "/projects/project1.png",
+    tags: ["React", "Go", "MongoDB", "Native"],
     demoUrl: "#",
     githubUrl: "https://github.com/BryanC05/Image-Search-MERN-OAuth",
-    status: "Featured operation",
+    status: "Featured project",
   },
   {
     id: 2,
-    title: "E-Commerce Order Log System",
+    title: "Delphi Nexus",
     description:
-      "A backend-focused system exploring hybrid microservice architecture for order management and operational reliability.",
+      "Delphi Nexus is a futuristic, cyberpunk-themed monitoring dashboard designed for real-time intelligence gathering. It provides a centralized hub for tracking everything from global news and cybersecurity threats to aerospace launches and solar weather.",
     image: "/projects/project2.png",
-    tags: ["Laravel", "PHP", "JavaScript", "Operations"],
+    tags: ["Laravel", "PHP", "JavaScript", "SQL"],
     demoUrl: "#",
     githubUrl: "https://github.com/BryanC05/E-Commerce-Order-Log-System",
-    status: "System build",
+    status: "Backend build",
   },
   {
     id: 3,
-    title: "Weather App",
+    title: "PDF Forge",
     description:
-      "A lightweight weather interface that surfaces current conditions and practical day-of recommendations through API-driven data.",
-    image: "/projects/project1.png",
-    tags: ["API", "JavaScript", "CSS", "HTML"],
+      "A powerful, open-source web application for manipulating PDF files. Merge, split, organize, compress, and more - all in your browser with a privacy-focused backend.",
+    image: "/projects/project3.png",
+    tags: ["React", "PDF.js", "WebAssembly", "Tool"],
     demoUrl: "#",
     githubUrl: "https://github.com/BryanC05/Weather-App",
-    status: "Utility concept",
+    status: "Utility application",
   },
 ];
 
@@ -44,10 +82,10 @@ export const ProjectsSection = () => {
   return (
     <SectionShell
       id="projects"
-      eyebrow="Selected operations"
+      eyebrow="Selected Projects"
       title="Projects that balance"
       accent="execution and presentation"
-      description="These builds highlight how I approach different problem spaces, from polished user-facing interfaces to systems-oriented implementation work."
+      description="These builds highlight how I approach different project requirements, from polished user-facing interfaces to functional implementation work."
       align="center"
     >
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
@@ -71,7 +109,10 @@ export const ProjectsSection = () => {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {featured.tags.map((tag) => (
-                    <span key={tag} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                    <span
+                      key={tag}
+                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.18em] text-muted-foreground"
+                    >
                       {tag}
                     </span>
                   ))}
@@ -86,11 +127,62 @@ export const ProjectsSection = () => {
                 >
                   Source <Github size={16} />
                 </a>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <button className="action-button-secondary">
+                      Details <Info size={16} />
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-2xl border-white/10 bg-background/95 backdrop-blur-2xl">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-semibold">{featured.title} // Technical Details</DialogTitle>
+                      <DialogDescription className="text-muted-foreground">
+                        Architecture, stack, and development environment overview.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="mt-6 space-y-8 text-left">
+                      {featured.details && (
+                        <>
+                          <div className="grid gap-6 sm:grid-cols-2">
+                            {featured.details.stack.map((group) => (
+                              <div key={group.category} className="space-y-3">
+                                <h4 className="text-sm font-semibold uppercase tracking-wider text-primary">
+                                  {group.category}
+                                </h4>
+                                <ul className="space-y-2">
+                                  {group.items.map((item) => (
+                                    <li key={item} className="text-sm text-muted-foreground flex items-start gap-2">
+                                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary/50" />
+                                      {item}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div className="rounded-2xl border border-white/8 bg-white/5 p-5">
+                            <h4 className="text-sm font-semibold uppercase tracking-wider text-primary mb-4">
+                              Local Development Setup
+                            </h4>
+                            <div className="flex flex-wrap gap-2">
+                              {featured.details.setup.map((item) => (
+                                <span key={item} className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-foreground">
+                                  {item}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </DialogContent>
+                </Dialog>
                 <a
                   href={featured.demoUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="action-button-secondary"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-foreground transition-all hover:bg-white/10"
                 >
                   Live preview <ExternalLink size={16} />
                 </a>

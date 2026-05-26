@@ -6,16 +6,16 @@ import { SectionShell } from "@/components/SectionShell";
 const skillSets = {
   all: [
     {
-      name: "React & SPA Systems",
+      name: "Frontend Development",
       category: "frontend",
       level: 92,
       note: "Component architecture, state flow, composable UI sections",
     },
     {
-      name: "Tailwind & Design Systems",
+      name: "Styling & UI Systems",
       category: "frontend",
       level: 90,
-      note: "Token-based styling, responsive polish, scalable utility patterns",
+      note: "CSS-in-JS, Tailwind, design systems, responsive polish",
     },
     {
       name: "JavaScript / TypeScript",
@@ -53,19 +53,19 @@ const skillSets = {
       name: "Tailwind CSS",
       category: "frontend",
       level: 90,
-      note: "Design token systems, custom utilities, responsive styling",
+      note: "Design systems, custom utilities, responsive styling",
     },
     {
       name: "Next.js",
       category: "frontend",
       level: 78,
-      note: "App-like landing pages, performant rendering, structured layouts",
+      note: "Server-side rendering, performant layouts, SEO optimization",
     },
     {
       name: "Motion Design",
       category: "frontend",
       level: 84,
-      note: "Hover states, reveal choreography, tactile interface feedback",
+      note: "Tactile interface feedback, smooth transitions, reveal choreography",
     },
   ],
   backend: [
@@ -99,7 +99,7 @@ const skillSets = {
       name: "GitHub Workflow",
       category: "tools",
       level: 88,
-      note: "Version control, collaboration, and portfolio deployment habits",
+      note: "Version control, collaboration, and project deployment habits",
     },
     {
       name: "Figma",
@@ -131,10 +131,10 @@ export const SkillsSection = () => {
   return (
     <SectionShell
       id="skills"
-      eyebrow="Systems dashboard"
+      eyebrow="Skills & Tools"
       title="A toolkit shaped for"
       accent="production-ready interfaces"
-      description="Rather than chasing every framework equally, I focus on a practical stack that helps me design, build, and refine high-impact web experiences."
+      description="I focus on a practical stack that helps me design, build, and refine high-impact web applications."
       className="bg-white/[0.015]"
     >
       <div className="space-y-8">
@@ -187,10 +187,10 @@ export const SkillsSection = () => {
             <div className="panel-line space-y-6 pt-6 text-left">
               <div>
                 <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
-                  Workflow signature
+                  Workflow approach
                 </p>
                 <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-foreground">
-                  Strong visual systems, grounded implementation choices.
+                  High-quality user interfaces, grounded implementation choices.
                 </h3>
               </div>
               <div className="space-y-4">
