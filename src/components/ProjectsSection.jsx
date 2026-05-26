@@ -48,8 +48,8 @@ const projects = [
     },
     image: "/projects/project1.png",
     tags: ["React", "Go", "MongoDB", "Native"],
-    demoUrl: "#",
-    githubUrl: "https://github.com/BryanC05/Image-Search-MERN-OAuth",
+    demoUrl: "https://dagangly.vercel.app/",
+    githubUrl: "https://github.com/BryanC05/dagangly",
     status: "Featured project",
   },
   {
@@ -59,8 +59,8 @@ const projects = [
       "Delphi Nexus is a futuristic, cyberpunk-themed monitoring dashboard designed for real-time intelligence gathering. It provides a centralized hub for tracking everything from global news and cybersecurity threats to aerospace launches and solar weather.",
     image: "/projects/project2.png",
     tags: ["Laravel", "PHP", "JavaScript", "SQL"],
-    demoUrl: "#",
-    githubUrl: "https://github.com/BryanC05/E-Commerce-Order-Log-System",
+    demoUrl: "https://delphi-nexus.vercel.app/",
+    githubUrl: "https://github.com/BryanC05/delphi-nexus",
     status: "Backend build",
   },
   {
@@ -70,8 +70,8 @@ const projects = [
       "A powerful, open-source web application for manipulating PDF files. Merge, split, organize, compress, and more - all in your browser with a privacy-focused backend.",
     image: "/projects/project3.png",
     tags: ["React", "PDF.js", "WebAssembly", "Tool"],
-    demoUrl: "#",
-    githubUrl: "https://github.com/BryanC05/Weather-App",
+    demoUrl: "https://pdf-tools-sooty.vercel.app/",
+    githubUrl: "https://github.com/BryanC05/PDF-Tools",
     status: "Utility application",
   },
 ];
