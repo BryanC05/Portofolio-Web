@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const navItems = [
   { name: "About", href: "#about", code: "01" },
@@ -111,9 +112,9 @@ export const Navbar = () => {
               <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse shadow-[0_0_8px_#ffd700]" />
               AVAILABLE
             </span>
-            <a href="/admin" className="action-button-secondary py-2.5 px-3">
+            <Link to="/admin" className="action-button-secondary py-2.5 px-3">
               SYSTEM
-            </a>
+            </Link>
             <a href="#contact" className="action-button">
               Get in Touch
             </a>
@@ -169,16 +170,20 @@ export const Navbar = () => {
                   </motion.a>
                 );
               })}
-              <motion.a
+              <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: navItems.length * 0.08 }}
-                href="/admin"
-                className="mt-4 flex items-center justify-center action-button-secondary w-full"
-                onClick={() => setIsMenuOpen(false)}
+                className="mt-4 w-full"
               >
-                SYSTEM
-              </motion.a>
+                <Link
+                  to="/admin"
+                  className="flex items-center justify-center action-button-secondary w-full"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  SYSTEM
+                </Link>
+              </motion.div>
               <motion.a
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
