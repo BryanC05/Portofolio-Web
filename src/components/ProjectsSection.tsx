@@ -2,7 +2,7 @@ import { ArrowRight, ExternalLink, Github, Info, ChevronLeft, ChevronRight } fro
 import { Panel } from "@/components/Panel";
 import { SectionShell } from "@/components/SectionShell";
 import { usePortfolioData } from "@/hooks/usePortfolioData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,

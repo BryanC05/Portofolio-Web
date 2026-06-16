@@ -66,10 +66,10 @@ export const ProjectsSection = () => {
               <div className="overflow-hidden border border-primary/20 bg-secondary/60 relative group cursor-pointer"
                    style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)" }}
                    onClick={() => setSelectedImage({
-                     images: (featured.images && featured.images.length > 0) ? featured.images : [featured.image],
-                     currentIndex: 0,
-                     title: featured.title
-                   })}
+                      images: (featured.images && featured.images.length > 0) ? featured.images : [featured.image],
+                      currentIndex: 0,
+                      title: featured.title
+                    })}
               >
                 <img
                   src={featured.image}
