@@ -5,8 +5,23 @@ export default async function handler(req, res) {
   // Ensure JSON response content-type
   res.setHeader("Content-Type", "application/json");
 
-  const kvUrl = process.env.KV_REST_API_URL;
-  const kvToken = process.env.KV_REST_API_TOKEN;
+  let kvUrl = process.env.KV_REST_API_URL;
+  let kvToken = process.env.KV_REST_API_TOKEN;
+
+  // Fallback for REDIS_URL (which commonly contains host/password for Upstash REST API)
+  if ((!kvUrl || !kvToken) && process.env.REDIS_URL) {
+    try {
+      const match = process.env.REDIS_URL.match(/rediss?:\/\/([^:]+):([^@]+)@([^:/]+)/);
+      if (match) {
+        const password = match[2];
+        const host = match[3];
+        kvUrl = `https://${host}`;
+        kvToken = password;
+      }
+    } catch (e) {
+      console.error("Failed to parse REDIS_URL:", e);
+    }
+  }
 
   // Local fallback reader helper
   const readLocalFallback = () => {
