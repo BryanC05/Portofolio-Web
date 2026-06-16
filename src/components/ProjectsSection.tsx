@@ -1,4 +1,4 @@
-import { ArrowRight, ExternalLink, Github, Info } from "lucide-react";
+import { ArrowRight, ExternalLink, Github, Info, ChevronLeft, ChevronRight } from "lucide-react";
 import { Panel } from "@/components/Panel";
 import { SectionShell } from "@/components/SectionShell";
 import { usePortfolioData } from "@/hooks/usePortfolioData";
@@ -14,7 +14,38 @@ import {
 
 export const ProjectsSection = () => {
   const { data, loading } = usePortfolioData();
-  const [selectedImage, setSelectedImage] = useState<{ url: string; title: string } | null>(null);
+  const [selectedImage, setSelectedImage] = useState<{
+    images: string[];
+    currentIndex: number;
+    title: string;
+  } | null>(null);
+
+  useEffect(() => {
+    if (!selectedImage) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") {
+        setSelectedImage((prev) => {
+          if (!prev || prev.images.length <= 1) return prev;
+          return {
+            ...prev,
+            currentIndex: (prev.currentIndex + 1) % prev.images.length,
+          };
+        });
+      } else if (e.key === "ArrowLeft") {
+        setSelectedImage((prev) => {
+          if (!prev || prev.images.length <= 1) return prev;
+          return {
+            ...prev,
+            currentIndex: (prev.currentIndex - 1 + prev.images.length) % prev.images.length,
+          };
+        });
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedImage]);
 
   if (loading || !data) return null;
 
@@ -38,7 +69,11 @@ export const ProjectsSection = () => {
               {/* Project Image wrapped in custom shear clip path */}
               <div className="overflow-hidden border border-primary/20 bg-secondary/60 relative group cursor-pointer"
                    style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)" }}
-                   onClick={() => setSelectedImage({ url: featured.image, title: featured.title })}
+                   onClick={() => setSelectedImage({
+                      images: (featured.images && featured.images.length > 0) ? featured.images : [featured.image],
+                      currentIndex: 0,
+                      title: featured.title
+                    })}
               >
                 <img
                   src={featured.image}
@@ -168,7 +203,11 @@ export const ProjectsSection = () => {
                 {/* Styled image with diagonal clip */}
                 <div className="overflow-hidden border border-primary/15 bg-secondary/80 cursor-pointer group relative"
                      style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%)" }}
-                     onClick={() => setSelectedImage({ url: project.image, title: project.title })}
+                     onClick={() => setSelectedImage({
+                       images: (project.images && project.images.length > 0) ? project.images : [project.image],
+                       currentIndex: 0,
+                       title: project.title
+                     })}
                 >
                   <img
                     src={project.image}
@@ -236,15 +275,58 @@ export const ProjectsSection = () => {
             {/* Title & Close Info */}
             <div className="w-full flex justify-between items-center px-4 py-2 border-b border-primary/20 text-xs font-bold uppercase tracking-wider text-primary">
               <span>{selectedImage?.title} // INTERFACE VIEW</span>
-              <span className="text-accent text-[9px]">// CLICK OUTSIDE TO DISMISS</span>
+              <div className="flex items-center gap-3">
+                {selectedImage && selectedImage.images.length > 1 && (
+                  <span className="text-accent">
+                    IMAGE {selectedImage.currentIndex + 1} / {selectedImage.images.length}
+                  </span>
+                )}
+                <span className="text-accent text-[9px]">// CLICK OUTSIDE TO DISMISS</span>
+              </div>
             </div>
-            <div className="w-full p-2 flex justify-center items-center bg-secondary/40 border border-primary/10 mt-3"
+            
+            <div className="relative w-full p-2 flex justify-center items-center bg-secondary/40 border border-primary/10 mt-3"
                  style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)" }}>
+              
+              {/* Left Arrow */}
+              {selectedImage && selectedImage.images.length > 1 && (
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedImage(prev => prev ? {
+                      ...prev,
+                      currentIndex: (prev.currentIndex - 1 + prev.images.length) % prev.images.length
+                    } : null);
+                  }}
+                  className="absolute left-4 z-20 h-10 w-10 flex items-center justify-center border border-primary/40 bg-background/80 text-primary hover:bg-primary hover:text-background transition-colors rounded-full cursor-pointer shadow-[0_0_15px_rgba(0,229,255,0.2)]"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft size={20} />
+                </button>
+              )}
+
               <img
-                src={selectedImage?.url}
+                src={selectedImage ? selectedImage.images[selectedImage.currentIndex] : ""}
                 alt={selectedImage?.title}
                 className="max-h-[75vh] w-auto max-w-full object-contain"
               />
+
+              {/* Right Arrow */}
+              {selectedImage && selectedImage.images.length > 1 && (
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedImage(prev => prev ? {
+                      ...prev,
+                      currentIndex: (prev.currentIndex + 1) % prev.images.length
+                    } : null);
+                  }}
+                  className="absolute right-4 z-20 h-10 w-10 flex items-center justify-center border border-primary/40 bg-background/80 text-primary hover:bg-primary hover:text-background transition-colors rounded-full cursor-pointer shadow-[0_0_15px_rgba(0,229,255,0.2)]"
+                  aria-label="Next image"
+                >
+                  <ChevronRight size={20} />
+                </button>
+              )}
             </div>
           </div>
         </DialogContent>

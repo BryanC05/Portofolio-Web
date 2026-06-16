@@ -171,6 +171,94 @@ export const Admin = () => {
     reader.readAsDataURL(file);
   };
 
+  const handleProjectGalleryUpload = (projId, file) => {
+    if (!file) return;
+    
+    if (file.size > 2 * 1024 * 1024) {
+      toast({ 
+        title: "File Too Large", 
+        description: "Images must be smaller than 2MB.", 
+        variant: "destructive" 
+      });
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      if (e.target?.result) {
+        setEditedData(prev => {
+          const copy = { ...prev };
+          const pIdx = copy.projects.findIndex(p => p.id === projId);
+          if (pIdx !== -1) {
+            const p = copy.projects[pIdx];
+            if (!p.images) {
+              p.images = p.image ? [p.image] : [];
+            }
+            p.images.push(e.target.result);
+            if (p.images.length === 1) {
+              p.image = p.images[0];
+            }
+          }
+          return copy;
+        });
+        toast({ title: "Image Uploaded", description: "Added to project gallery." });
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const updateProjectGalleryImage = (projId, imgIdx, value) => {
+    setEditedData(prev => {
+      const copy = { ...prev };
+      const pIdx = copy.projects.findIndex(p => p.id === projId);
+      if (pIdx !== -1) {
+        const p = copy.projects[pIdx];
+        if (!p.images) {
+          p.images = p.image ? [p.image] : [];
+        }
+        p.images[imgIdx] = value;
+        if (imgIdx === 0) {
+          p.image = value;
+        }
+      }
+      return copy;
+    });
+  };
+
+  const addProjectGalleryImage = (projId) => {
+    setEditedData(prev => {
+      const copy = { ...prev };
+      const pIdx = copy.projects.findIndex(p => p.id === projId);
+      if (pIdx !== -1) {
+        const p = copy.projects[pIdx];
+        if (!p.images) {
+          p.images = p.image ? [p.image] : [];
+        }
+        p.images.push("/projects/project2.png");
+        if (p.images.length === 1) {
+          p.image = p.images[0];
+        }
+      }
+      return copy;
+    });
+  };
+
+  const deleteProjectGalleryImage = (projId, imgIdx) => {
+    setEditedData(prev => {
+      const copy = { ...prev };
+      const pIdx = copy.projects.findIndex(p => p.id === projId);
+      if (pIdx !== -1) {
+        const p = copy.projects[pIdx];
+        if (!p.images) {
+          p.images = p.image ? [p.image] : [];
+        }
+        p.images = p.images.filter((_, idx) => idx !== imgIdx);
+        p.image = p.images.length > 0 ? p.images[0] : "";
+      }
+      return copy;
+    });
+  };
+
   const addProject = () => {
     const newProj = {
       id: Date.now(),
@@ -638,50 +726,66 @@ export const Admin = () => {
                           </label>
                         </div>
 
-                        {/* Image Editor */}
-                        <div className="grid gap-4 sm:grid-cols-[150px_1fr] items-center border border-primary/10 bg-background/50 p-3 rounded-lg">
-                          <div className="h-24 border border-primary/20 bg-secondary/80 overflow-hidden relative group"
-                               style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)" }}>
-                            {project.image ? (
-                              <img src={project.image} alt={project.title} className="h-full w-full object-cover" />
-                            ) : (
-                              <div className="h-full flex items-center justify-center text-primary/40"><Image size={24} /></div>
-                            )}
-                          </div>
-
-                          <div className="space-y-2 text-left">
+                        {/* Image Gallery Editor */}
+                        <div className="border border-primary/10 bg-background/50 p-4 rounded-lg space-y-4">
+                          <div className="flex items-center justify-between border-b border-primary/10 pb-2">
                             <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                              PROJECT COVER IMAGE
+                              PROJECT IMAGES GALLERY (FIRST IMAGE IS USED AS COVER)
                             </p>
-                            <div className="flex flex-col gap-2 sm:flex-row">
-                              <label className="flex-1 space-y-0.5 text-[9px] font-bold text-muted-foreground">
-                                <input
-                                  type="text"
-                                  value={project.image}
-                                  placeholder="IMAGE URL (E.G. /projects/proj1.png)"
-                                  onChange={(e) => updateProjectField(project.id, "image", e.target.value)}
-                                  className="w-full border border-primary/20 bg-background px-3 py-2 text-xs text-foreground focus:border-primary"
-                                />
-                              </label>
-
-                              {/* Local Upload */}
-                              <div className="relative shrink-0 mt-2 sm:mt-0">
+                            <div className="flex gap-2">
+                              {/* Upload local image to gallery */}
+                              <div className="relative">
                                 <input
                                   type="file"
                                   accept="image/*"
-                                  id={`img-file-${project.id}`}
-                                  onChange={(e) => handleImageUpload(project.id, e.target.files?.[0])}
+                                  id={`gallery-upload-${project.id}`}
+                                  onChange={(e) => handleProjectGalleryUpload(project.id, e.target.files?.[0])}
                                   className="hidden"
                                 />
                                 <label 
-                                  htmlFor={`img-file-${project.id}`}
-                                  className="action-button-secondary py-2.5 px-3 text-[10px] cursor-pointer inline-flex items-center"
-                                  style={{ padding: "0.6rem 0.75rem" }}
+                                  htmlFor={`gallery-upload-${project.id}`}
+                                  className="action-button-secondary py-1.5 px-3 text-[10px] cursor-pointer inline-flex items-center"
                                 >
                                   <Upload size={12} className="mr-1" /> Upload Image
                                 </label>
                               </div>
+                              <button 
+                                type="button"
+                                onClick={() => addProjectGalleryImage(project.id)}
+                                className="action-button-secondary py-1.5 px-3 text-[10px] inline-flex items-center"
+                              >
+                                <Plus size={12} className="mr-1" /> Add URL
+                              </button>
                             </div>
+                          </div>
+
+                          <div className="grid gap-3">
+                            {((project.images && project.images.length > 0) ? project.images : [project.image || ""]).map((img, imgIdx) => (
+                              <div key={imgIdx} className="grid gap-3 sm:grid-cols-[80px_1fr_40px] items-center border border-primary/10 bg-primary/5 p-2 rounded">
+                                <div className="h-12 border border-primary/15 bg-secondary/80 overflow-hidden relative"
+                                     style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 4px) 100%, 0 100%)" }}>
+                                  {img ? (
+                                    <img src={img} alt={`Gallery ${imgIdx}`} className="h-full w-full object-cover" />
+                                  ) : (
+                                    <div className="h-full flex items-center justify-center text-primary/30"><Image size={16} /></div>
+                                  )}
+                                </div>
+                                <input
+                                  type="text"
+                                  value={img}
+                                  placeholder="Image URL or Base64 data"
+                                  onChange={(e) => updateProjectGalleryImage(project.id, imgIdx, e.target.value)}
+                                  className="w-full border border-primary/15 bg-background px-3 py-1.5 text-xs text-foreground focus:border-primary"
+                                />
+                                <button 
+                                  type="button"
+                                  onClick={() => deleteProjectGalleryImage(project.id, imgIdx)}
+                                  className="h-8 w-8 flex items-center justify-center border border-red-500/25 text-red-400 hover:bg-red-500 hover:text-white transition-colors shrink-0"
+                                >
+                                  <Trash2 size={12} />
+                                </button>
+                              </div>
+                            ))}
                           </div>
                         </div>
 
