@@ -28,11 +28,11 @@
   --animate-fade-in-delay-2: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.24s forwards;
   --animate-fade-in-delay-3: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.36s forwards;
   --animate-fade-in-delay-4: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.48s forwards;
-  --animate-orbit: orbit 24s linear infinite;
-  --animate-scanline: scanline 8s linear infinite;
-  --animate-grid-pan: grid-pan 22s linear infinite;
+  --animate-orbit: orbit 45s linear infinite;
+  --animate-scanline: none;
+  --animate-grid-pan: none;
   --animate-p3r-float: p3r-float 15s ease-in-out infinite;
-  --animate-water-flow: water-flow 25s ease-in-out infinite;
+  --animate-water-flow: none;
 
   @keyframes float {
     0%,
@@ -40,37 +40,26 @@
       transform: translate3d(0, 0, 0);
     }
     50% {
-      transform: translate3d(0, -10px, 0);
+      transform: translate3d(0, -8px, 0);
     }
   }
 
   @keyframes p3r-float {
     0%, 100% {
-      transform: translateY(0px) rotate(0deg) scale(1);
+      transform: translate3d(0, 0, 0) rotate(0deg);
     }
     50% {
-      transform: translateY(-20px) rotate(8deg) scale(1.03);
-    }
-  }
-
-  @keyframes water-flow {
-    0%, 100% {
-      transform: translate(0, 0) scale(1);
-    }
-    50% {
-      transform: translate(-10px, 15px) scale(1.05);
+      transform: translate3d(0, -12px, 0) rotate(4deg);
     }
   }
 
   @keyframes pulse-subtle {
     0%,
     100% {
-      opacity: 0.4;
-      filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.2));
+      opacity: 0.35;
     }
     50% {
-      opacity: 0.8;
-      filter: drop-shadow(0 0 25px rgba(0, 229, 255, 0.5));
+      opacity: 0.7;
     }
   }
 
