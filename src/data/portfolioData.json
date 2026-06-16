@@ -1,0 +1,259 @@
+{
+  "profile": {
+    "name": "Bryan Chan",
+    "location": "Bekasi, Indonesia",
+    "status": "Online",
+    "headline": "Designing and building functional web experiences with product clarity.",
+    "description": "I’m Bryan Chan, a developer focused on interfaces that feel sharp, responsive, and intentionally composed—bridging modern frontend engineering, thoughtful UX, and production-ready execution.",
+    "seesBadge": "SEES"
+  },
+  "stats": [
+    { "label": "Primary focus", "value": "Web Applications", "code": "ARC-01" },
+    { "label": "Delivery mode", "value": "Full-stack dev", "code": "ARC-02" },
+    { "label": "Current status", "value": "Available", "code": "ARC-03" }
+  ],
+  "skillOverview": [
+    { "name": "React interface design", "value": 92 },
+    { "name": "Tailwind UI systems", "value": 90 },
+    { "name": "Motion & polished execution", "value": 84 }
+  ],
+  "philosophy": "Currently crafting web experiences with stronger visual systems, section choreography, and high-fidelity interaction design.",
+  "capabilities": [
+    {
+      "code": "01",
+      "title": "Interface Engineering",
+      "description": "Modern web applications built with durable component architecture, clean interaction states, and performance in mind.",
+      "iconName": "Layers3"
+    },
+    {
+      "code": "02",
+      "title": "Product Experience",
+      "description": "Translating abstract ideas into intuitive page flows, information hierarchy, and polished visual rhythm.",
+      "iconName": "Sparkles"
+    },
+    {
+      "code": "03",
+      "title": "Delivery Discipline",
+      "description": "From prototyping to implementation, I keep scope clear, move deliberately, and optimize for shippable outcomes.",
+      "iconName": "BriefcaseBusiness"
+    }
+  ],
+  "markers": ["Frontend-first", "Design-aware", "Fast iteration", "Collaborative workflow"],
+  "skillSets": {
+    "all": [
+      {
+        "name": "Frontend Development",
+        "category": "frontend",
+        "level": 92,
+        "note": "Component architecture, state flow, composable UI sections"
+      },
+      {
+        "name": "Styling & UI Systems",
+        "category": "frontend",
+        "level": 90,
+        "note": "CSS-in-JS, Tailwind, design systems, responsive polish"
+      },
+      {
+        "name": "JavaScript / TypeScript",
+        "category": "frontend",
+        "level": 88,
+        "note": "Interactive logic, maintainable patterns, modern tooling"
+      },
+      {
+        "name": "Node & API Integration",
+        "category": "backend",
+        "level": 78,
+        "note": "Service wiring, auth-aware features, pragmatic backend support"
+      },
+      {
+        "name": "Data & Persistence",
+        "category": "backend",
+        "level": 72,
+        "note": "MongoDB, PostgreSQL, schema-aware implementation choices"
+      },
+      {
+        "name": "Workflow Tooling",
+        "category": "tools",
+        "level": 86,
+        "note": "Git, Figma, Docker, rapid iteration and handoff discipline"
+      }
+    ],
+    "frontend": [
+      {
+        "name": "React",
+        "category": "frontend",
+        "level": 92,
+        "note": "Reusable components, routing, dynamic UI composition"
+      },
+      {
+        "name": "Tailwind CSS",
+        "category": "frontend",
+        "level": 90,
+        "note": "Design systems, custom utilities, responsive styling"
+      },
+      {
+        "name": "Next.js",
+        "category": "frontend",
+        "level": 78,
+        "note": "Server-side rendering, performant layouts, SEO optimization"
+      },
+      {
+        "name": "Motion Design",
+        "category": "frontend",
+        "level": 84,
+        "note": "Tactile interface feedback, smooth transitions, reveal choreography"
+      }
+    ],
+    "backend": [
+      {
+        "name": "Node.js",
+        "category": "backend",
+        "level": 78,
+        "note": "Supporting APIs, project services, backend integration work"
+      },
+      {
+        "name": "Express",
+        "category": "backend",
+        "level": 74,
+        "note": "REST structure, middleware flow, pragmatic server foundations"
+      },
+      {
+        "name": "MongoDB / PostgreSQL",
+        "category": "backend",
+        "level": 72,
+        "note": "Flexible and relational persistence depending on product needs"
+      },
+      {
+        "name": "Authentication",
+        "category": "backend",
+        "level": 70,
+        "note": "OAuth flows and user access considerations in app projects"
+      }
+    ],
+    "tools": [
+      {
+        "name": "GitHub Workflow",
+        "category": "tools",
+        "level": 88,
+        "note": "Version control, collaboration, and project deployment habits"
+      },
+      {
+        "name": "Figma",
+        "category": "tools",
+        "level": 82,
+        "note": "Layout planning, visual references, design-development alignment"
+      },
+      {
+        "name": "Docker",
+        "category": "tools",
+        "level": 68,
+        "note": "Container basics for local parity and simpler service setup"
+      },
+      {
+        "name": "Developer Tooling",
+        "category": "tools",
+        "level": 87,
+        "note": "Vite, VS Code, structured iteration, and fast debugging loops"
+      }
+    ]
+  },
+  "projects": [
+    {
+      "id": 1,
+      "title": "Dagangly",
+      "description": "Dagangly is a comprehensive, multi-platform e-commerce ecosystem designed to connect local buyers with Micro, Small, and Medium Enterprises (MSMEs/UMKM). The platform provides robust tools for sellers to manage their business, automate workflows, and reach customers, while offering buyers a highly accessible, modern, and secure shopping experience.",
+      "details": {
+        "stack": [
+          {
+            "category": "Frontend (Web)",
+            "items": [
+              "Framework: React.js (Vite)",
+              "Styling: Tailwind CSS",
+              "Features: PWA Support, Responsive Design, Accessibility-First"
+            ]
+          },
+          {
+            "category": "Mobile App",
+            "items": [
+              "Framework: React Native (Expo)",
+              "Distribution: Android EAS Build (APK & AAB)",
+              "Features: Google Maps, Firebase Push Notifications, Biometrics"
+            ]
+          },
+          {
+            "category": "Backend & Database",
+            "items": [
+              "Language: Go (Golang) with Gin framework",
+              "MongoDB: Main application data",
+              "PostgreSQL: n8n workflow engine persistence",
+              "Storage: AWS S3 / Cloudinary for persistent uploads"
+            ]
+          }
+        ],
+        "setup": ["Docker & Docker Compose", "Node.js 18+", "Go 1.20+", "MongoDB"]
+      },
+      "image": "/projects/project1.png",
+      "tags": ["React", "Go", "MongoDB", "Native"],
+      "demoUrl": "https://dagangly.vercel.app/",
+      "githubUrl": "https://github.com/BryanC05/dagangly",
+      "status": "Featured project"
+    },
+    {
+      "id": 2,
+      "title": "Delphi Nexus",
+      "description": "Delphi Nexus is a futuristic, cyberpunk-themed monitoring dashboard designed for real-time intelligence gathering. It provides a centralized hub for tracking everything from global news and cybersecurity threats to aerospace launches and solar weather.",
+      "image": "/projects/project2.png",
+      "tags": ["Laravel", "PHP", "JavaScript", "SQL"],
+      "demoUrl": "https://delphi-nexus.vercel.app/",
+      "githubUrl": "https://github.com/BryanC05/delphi-nexus",
+      "status": "Backend build"
+    },
+    {
+      "id": 3,
+      "title": "PDF Forge",
+      "description": "A powerful, open-source web application for manipulating PDF files. Merge, split, organize, compress, and more - all in your browser with a privacy-focused backend.",
+      "image": "/projects/project3.png",
+      "tags": ["React", "PDF.js", "WebAssembly", "Tool"],
+      "demoUrl": "https://pdf-tools-sooty.vercel.app/",
+      "githubUrl": "https://github.com/BryanC05/PDF-Tools",
+      "status": "Utility application"
+    }
+  ],
+  "contactMethods": [
+    {
+      "label": "Primary mail",
+      "value": "becejob@gmail.com",
+      "href": "mailto:becejob@gmail.com",
+      "iconName": "Mail"
+    },
+    {
+      "label": "Direct line",
+      "value": "+62 855-9167-6171",
+      "href": "tel:+6285591676171",
+      "iconName": "Phone"
+    },
+    {
+      "label": "Location",
+      "value": "Bekasi, Harapan Indah",
+      "href": "#contact",
+      "iconName": "MapPin"
+    }
+  ],
+  "socialLinks": [
+    {
+      "name": "LinkedIn",
+      "href": "https://www.linkedin.com/in/bryan-chan-9705013a9/",
+      "iconName": "Linkedin"
+    },
+    {
+      "name": "GitHub",
+      "href": "https://github.com/BryanC05",
+      "iconName": "Github"
+    },
+    {
+      "name": "WhatsApp",
+      "href": "https://wa.me/6285591676171",
+      "iconName": "MessageCircle"
+    }
+  ]
+}

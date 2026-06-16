@@ -1,6 +1,7 @@
 import { ArrowRight, ExternalLink, Github, Info } from "lucide-react";
 import { Panel } from "@/components/Panel";
 import { SectionShell } from "@/components/SectionShell";
+import { usePortfolioData } from "@/hooks/usePortfolioData";
 import {
   Dialog,
   DialogContent,
@@ -10,73 +11,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-const projects = [
-  {
-    id: 1,
-    title: "Dagangly",
-    description:
-      "Dagangly is a comprehensive, multi-platform e-commerce ecosystem designed to connect local buyers with Micro, Small, and Medium Enterprises (MSMEs/UMKM). The platform provides robust tools for sellers to manage their business, automate workflows, and reach customers, while offering buyers a highly accessible, modern, and secure shopping experience.",
-    details: {
-      stack: [
-        {
-          category: "Frontend (Web)",
-          items: [
-            "Framework: React.js (Vite)",
-            "Styling: Tailwind CSS",
-            "Features: PWA Support, Responsive Design, Accessibility-First",
-          ],
-        },
-        {
-          category: "Mobile App",
-          items: [
-            "Framework: React Native (Expo)",
-            "Distribution: Android EAS Build (APK & AAB)",
-            "Features: Google Maps, Firebase Push Notifications, Biometrics",
-          ],
-        },
-        {
-          category: "Backend & Database",
-          items: [
-            "Language: Go (Golang) with Gin framework",
-            "MongoDB: Main application data",
-            "PostgreSQL: n8n workflow engine persistence",
-            "Storage: AWS S3 / Cloudinary for persistent uploads",
-          ],
-        },
-      ],
-      setup: ["Docker & Docker Compose", "Node.js 18+", "Go 1.20+", "MongoDB"],
-    },
-    image: "/projects/project1.png",
-    tags: ["React", "Go", "MongoDB", "Native"],
-    demoUrl: "https://dagangly.vercel.app/",
-    githubUrl: "https://github.com/BryanC05/dagangly",
-    status: "Featured project",
-  },
-  {
-    id: 2,
-    title: "Delphi Nexus",
-    description:
-      "Delphi Nexus is a futuristic, cyberpunk-themed monitoring dashboard designed for real-time intelligence gathering. It provides a centralized hub for tracking everything from global news and cybersecurity threats to aerospace launches and solar weather.",
-    image: "/projects/project2.png",
-    tags: ["Laravel", "PHP", "JavaScript", "SQL"],
-    demoUrl: "https://delphi-nexus.vercel.app/",
-    githubUrl: "https://github.com/BryanC05/delphi-nexus",
-    status: "Backend build",
-  },
-  {
-    id: 3,
-    title: "PDF Forge",
-    description:
-      "A powerful, open-source web application for manipulating PDF files. Merge, split, organize, compress, and more - all in your browser with a privacy-focused backend.",
-    image: "/projects/project3.png",
-    tags: ["React", "PDF.js", "WebAssembly", "Tool"],
-    demoUrl: "https://pdf-tools-sooty.vercel.app/",
-    githubUrl: "https://github.com/BryanC05/PDF-Tools",
-    status: "Utility application",
-  },
-];
-
 export const ProjectsSection = () => {
+  const { data, loading } = usePortfolioData();
+
+  if (loading || !data) return null;
+
+  const { projects } = data;
   const [featured, ...supporting] = projects;
 
   return (
@@ -88,141 +28,173 @@ export const ProjectsSection = () => {
       description="These builds highlight how I approach different project requirements, from polished user-facing interfaces to functional implementation work."
       align="center"
     >
-      <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-        <Panel className="motion-panel p-4 md:p-5">
-          <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-black/20">
-              <img
-                src={featured.image}
-                alt={featured.title}
-                className="h-full min-h-72 w-full object-cover transition-transform duration-700 hover:scale-105"
-              />
-            </div>
-            <div className="flex flex-col justify-between gap-6 p-2 text-left md:p-4">
-              <div className="space-y-4">
-                <span className="data-pill">{featured.status}</span>
-                <div>
-                  <h3 className="text-2xl font-semibold tracking-[-0.04em] text-foreground md:text-3xl">
-                    {featured.title}
-                  </h3>
-                  <p className="mt-4 leading-7 text-muted-foreground">{featured.description}</p>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {featured.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.18em] text-muted-foreground"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+      <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
+        {/* Left Side: Featured Project */}
+        {featured && (
+          <Panel className="p-4 md:p-6" variant="default">
+            <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr] pt-2">
+              {/* Project Image wrapped in custom shear clip path */}
+              <div className="overflow-hidden border border-primary/20 bg-secondary/60 relative group"
+                   style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)" }}>
+                <img
+                  src={featured.image}
+                  alt={featured.title}
+                  className="h-full min-h-72 w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
               </div>
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href={featured.githubUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="action-button"
-                >
-                  Source <Github size={16} />
-                </a>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <button className="action-button-secondary">
-                      Details <Info size={16} />
-                    </button>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-2xl border-white/10 bg-background/95 backdrop-blur-2xl">
-                    <DialogHeader>
-                      <DialogTitle className="text-2xl font-semibold">{featured.title} // Technical Details</DialogTitle>
-                      <DialogDescription className="text-muted-foreground">
-                        Architecture, stack, and development environment overview.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <div className="mt-6 space-y-8 text-left">
-                      {featured.details && (
-                        <>
-                          <div className="grid gap-6 sm:grid-cols-2">
-                            {featured.details.stack.map((group) => (
-                              <div key={group.category} className="space-y-3">
-                                <h4 className="text-sm font-semibold uppercase tracking-wider text-primary">
-                                  {group.category}
-                                </h4>
-                                <ul className="space-y-2">
-                                  {group.items.map((item) => (
-                                    <li key={item} className="text-sm text-muted-foreground flex items-start gap-2">
-                                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary/50" />
-                                      {item}
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            ))}
-                          </div>
 
-                          <div className="rounded-2xl border border-white/8 bg-white/5 p-5">
-                            <h4 className="text-sm font-semibold uppercase tracking-wider text-primary mb-4">
-                              Local Development Setup
-                            </h4>
-                            <div className="flex flex-wrap gap-2">
-                              {featured.details.setup.map((item) => (
-                                <span key={item} className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-foreground">
-                                  {item}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </DialogContent>
-                </Dialog>
-                <a
-                  href={featured.demoUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-foreground transition-all hover:bg-white/10"
-                >
-                  Live preview <ExternalLink size={16} />
-                </a>
-              </div>
-            </div>
-          </div>
-        </Panel>
-
-        <div className="grid gap-5">
-          {supporting.map((project) => (
-            <Panel key={project.id} className="motion-panel p-4">
-              <div className="grid gap-4 sm:grid-cols-[120px_1fr] sm:items-center">
-                <div className="overflow-hidden rounded-[1.1rem] border border-white/10 bg-black/25">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="h-28 w-full object-cover transition-transform duration-500 hover:scale-105 sm:h-32"
-                  />
-                </div>
-                <div className="space-y-3 text-left">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <h3 className="text-lg font-semibold tracking-[-0.03em] text-foreground">{project.title}</h3>
-                    <span className="text-[0.68rem] uppercase tracking-[0.22em] text-muted-foreground">
-                      {project.status}
-                    </span>
+              {/* Details panel */}
+              <div className="flex flex-col justify-between gap-6 text-left p-1">
+                <div className="space-y-4">
+                  <span className="data-pill-gold">{featured.status}</span>
+                  <div>
+                    <h3 className="text-2xl font-black uppercase tracking-tight text-foreground text-glow">
+                      {featured.title}
+                    </h3>
+                    <p className="mt-3 text-xs leading-6 text-muted-foreground/90">{featured.description}</p>
                   </div>
-                  <p className="text-sm leading-6 text-muted-foreground">{project.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span key={`${project.id}-${tag}`} className="rounded-full border border-white/10 px-2.5 py-1 text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">
+                  
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {featured.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="data-pill"
+                      >
                         {tag}
                       </span>
                     ))}
                   </div>
-                  <div className="flex gap-3 pt-1">
-                    <a href={project.githubUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm text-foreground transition-colors hover:text-primary">
-                      <Github size={15} /> Repo
+                </div>
+
+                {/* Action items */}
+                <div className="flex flex-wrap gap-2 pt-2 border-t border-primary/15">
+                  <a
+                    href={featured.githubUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="action-button"
+                  >
+                    Source <Github size={14} />
+                  </a>
+
+                  {/* Dialog custom styling to fit P3R layout */}
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <button className="action-button-secondary">
+                        Details <Info size={14} />
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl border-primary/35 bg-[rgba(6,14,28,0.95)] backdrop-blur-2xl text-foreground"
+                                   style={{
+                                     clipPath: "polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%)",
+                                     boxShadow: "0 0 40px rgba(0, 229, 255, 0.25)"
+                                   }}>
+                      <DialogHeader className="border-b border-primary/20 pb-4">
+                        <DialogTitle className="text-xl font-black uppercase tracking-wide text-glow text-primary flex items-center gap-2">
+                          <span>{featured.title}</span>
+                          <span className="text-xs text-accent font-bold">// TECHNICAL SPEC</span>
+                        </DialogTitle>
+                        <DialogDescription className="text-muted-foreground text-xs uppercase tracking-wider">
+                          Architecture, stack, and development environment overview.
+                        </DialogDescription>
+                      </DialogHeader>
+
+                      <div className="mt-4 space-y-6 text-left max-h-[60vh] overflow-y-auto pr-2">
+                        {featured.details && (
+                          <>
+                            <div className="grid gap-4 sm:grid-cols-2">
+                              {featured.details.stack.map((group) => (
+                                <div key={group.category} className="border border-primary/15 bg-primary/5 p-4"
+                                     style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%)" }}>
+                                  <h4 className="text-xs font-bold uppercase tracking-wider text-accent mb-2">
+                                    {group.category}
+                                  </h4>
+                                  <ul className="space-y-1.5">
+                                    {group.items.map((item) => (
+                                      <li key={item} className="text-xs text-muted-foreground flex items-start gap-1.5">
+                                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-primary/60" style={{ clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }} />
+                                        {item}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              ))}
+                            </div>
+
+                            <div className="border border-primary/15 bg-primary/5 p-4"
+                                 style={{ clipPath: "polygon(8px 0, 100% 0, 100% 100%, 0 100%)" }}>
+                              <h4 className="text-xs font-bold uppercase tracking-wider text-primary mb-3">
+                                Local Development Setup
+                              </h4>
+                              <div className="flex flex-wrap gap-2">
+                                {featured.details.setup.map((item) => (
+                                  <span key={item} className="border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-mono text-foreground">
+                                    {item}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  <a
+                    href={featured.demoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="action-button-secondary py-3.5"
+                    style={{ paddingRight: "1.25rem", paddingLeft: "1.25rem" }}
+                  >
+                    Live <ExternalLink size={14} className="ml-1" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </Panel>
+        )}
+
+        {/* Right Side: Supporting Projects List */}
+        <div className="grid gap-5">
+          {supporting.map((project) => (
+            <Panel key={project.id} className="p-4" variant="alt">
+              <div className="grid gap-4 sm:grid-cols-[110px_1fr] sm:items-center pt-1">
+                {/* Styled image with diagonal clip */}
+                <div className="overflow-hidden border border-primary/15 bg-secondary/80"
+                     style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%)" }}>
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="h-24 w-full object-cover transition-transform duration-500 hover:scale-105 sm:h-28"
+                  />
+                </div>
+                
+                <div className="space-y-3 text-left">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h3 className="text-base font-bold uppercase tracking-wide text-foreground text-glow">{project.title}</h3>
+                    <span className="text-[8px] font-bold border border-primary/20 px-2 py-0.5 uppercase tracking-widest text-primary/80">
+                      {project.status}
+                    </span>
+                  </div>
+                  
+                  <p className="text-xs leading-5 text-muted-foreground/80">{project.description}</p>
+                  
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.tags.map((tag) => (
+                      <span key={`${project.id}-${tag}`} className="border border-primary/10 bg-primary/[0.02] px-2 py-0.5 text-[8px] font-bold uppercase tracking-wider text-muted-foreground/85">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex gap-4 pt-1 border-t border-primary/10">
+                    <a href={project.githubUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-foreground hover:text-primary transition-colors">
+                      <Github size={13} /> Repo
                     </a>
-                    <a href={project.demoUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm text-foreground transition-colors hover:text-primary">
-                      <ExternalLink size={15} /> Demo
+                    <a href={project.demoUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-foreground hover:text-primary transition-colors">
+                      <ExternalLink size={13} /> Demo
                     </a>
                   </div>
                 </div>
@@ -232,6 +204,7 @@ export const ProjectsSection = () => {
         </div>
       </div>
 
+      {/* Explore full GitHub CTA */}
       <div className="mt-10 text-center">
         <a
           className="action-button"
@@ -239,7 +212,7 @@ export const ProjectsSection = () => {
           rel="noreferrer"
           href="https://github.com/BryanC05"
         >
-          Explore full GitHub archive <ArrowRight size={16} />
+          Explore full GitHub archive <ArrowRight size={14} className="text-glow" />
         </a>
       </div>
     </SectionShell>

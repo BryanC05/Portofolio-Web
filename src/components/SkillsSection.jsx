@@ -2,131 +2,21 @@ import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Panel } from "@/components/Panel";
 import { SectionShell } from "@/components/SectionShell";
-
-const skillSets = {
-  all: [
-    {
-      name: "Frontend Development",
-      category: "frontend",
-      level: 92,
-      note: "Component architecture, state flow, composable UI sections",
-    },
-    {
-      name: "Styling & UI Systems",
-      category: "frontend",
-      level: 90,
-      note: "CSS-in-JS, Tailwind, design systems, responsive polish",
-    },
-    {
-      name: "JavaScript / TypeScript",
-      category: "frontend",
-      level: 88,
-      note: "Interactive logic, maintainable patterns, modern tooling",
-    },
-    {
-      name: "Node & API Integration",
-      category: "backend",
-      level: 78,
-      note: "Service wiring, auth-aware features, pragmatic backend support",
-    },
-    {
-      name: "Data & Persistence",
-      category: "backend",
-      level: 72,
-      note: "MongoDB, PostgreSQL, schema-aware implementation choices",
-    },
-    {
-      name: "Workflow Tooling",
-      category: "tools",
-      level: 86,
-      note: "Git, Figma, Docker, rapid iteration and handoff discipline",
-    },
-  ],
-  frontend: [
-    {
-      name: "React",
-      category: "frontend",
-      level: 92,
-      note: "Reusable components, routing, dynamic UI composition",
-    },
-    {
-      name: "Tailwind CSS",
-      category: "frontend",
-      level: 90,
-      note: "Design systems, custom utilities, responsive styling",
-    },
-    {
-      name: "Next.js",
-      category: "frontend",
-      level: 78,
-      note: "Server-side rendering, performant layouts, SEO optimization",
-    },
-    {
-      name: "Motion Design",
-      category: "frontend",
-      level: 84,
-      note: "Tactile interface feedback, smooth transitions, reveal choreography",
-    },
-  ],
-  backend: [
-    {
-      name: "Node.js",
-      category: "backend",
-      level: 78,
-      note: "Supporting APIs, project services, backend integration work",
-    },
-    {
-      name: "Express",
-      category: "backend",
-      level: 74,
-      note: "REST structure, middleware flow, pragmatic server foundations",
-    },
-    {
-      name: "MongoDB / PostgreSQL",
-      category: "backend",
-      level: 72,
-      note: "Flexible and relational persistence depending on product needs",
-    },
-    {
-      name: "Authentication",
-      category: "backend",
-      level: 70,
-      note: "OAuth flows and user access considerations in app projects",
-    },
-  ],
-  tools: [
-    {
-      name: "GitHub Workflow",
-      category: "tools",
-      level: 88,
-      note: "Version control, collaboration, and project deployment habits",
-    },
-    {
-      name: "Figma",
-      category: "tools",
-      level: 82,
-      note: "Layout planning, visual references, design-development alignment",
-    },
-    {
-      name: "Docker",
-      category: "tools",
-      level: 68,
-      note: "Container basics for local parity and simpler service setup",
-    },
-    {
-      name: "Developer Tooling",
-      category: "tools",
-      level: 87,
-      note: "Vite, VS Code, structured iteration, and fast debugging loops",
-    },
-  ],
-};
+import { motion, AnimatePresence } from "framer-motion";
+import { usePortfolioData } from "@/hooks/usePortfolioData";
 
 const categories = ["all", "frontend", "backend", "tools"];
 
 export const SkillsSection = () => {
+  const { data, loading } = usePortfolioData();
   const [activeCategory, setActiveCategory] = useState("all");
-  const filteredSkills = useMemo(() => skillSets[activeCategory], [activeCategory]);
+
+  const filteredSkills = useMemo(() => {
+    if (!data) return [];
+    return data.skillSets[activeCategory] || [];
+  }, [data, activeCategory]);
+
+  if (loading || !data) return null;
 
   return (
     <SectionShell
@@ -135,78 +25,119 @@ export const SkillsSection = () => {
       title="A toolkit shaped for"
       accent="production-ready interfaces"
       description="I focus on a practical stack that helps me design, build, and refine high-impact web applications."
-      className="bg-white/[0.015]"
+      className="bg-primary/[0.005]"
     >
       <div className="space-y-8">
-        <div className="flex flex-wrap gap-3">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={cn(
-                "rounded-full border px-4 py-2 text-sm capitalize tracking-[0.18em] transition-all duration-300",
-                activeCategory === category
-                  ? "border-primary/40 bg-primary/12 text-foreground shadow-[0_0_30px_rgba(82,142,255,0.12)]"
-                  : "border-white/10 bg-white/5 text-muted-foreground hover:border-white/20 hover:text-foreground"
-              )}
-            >
-              {category}
-            </button>
-          ))}
+        {/* Category selector in P3R Menu Style */}
+        <div className="flex flex-wrap gap-2 items-center">
+          {categories.map((category, index) => {
+            const isActive = activeCategory === category;
+            return (
+              <div key={category} className="flex items-center">
+                {index > 0 && (
+                  <span className="text-[10px] font-bold text-primary/30 mx-2 tracking-widest">//</span>
+                )}
+                <button
+                  onClick={() => setActiveCategory(category)}
+                  className={cn(
+                    "relative px-5 py-2 text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 cursor-pointer",
+                    isActive
+                      ? "text-primary text-glow font-black"
+                      : "text-muted-foreground hover:text-primary"
+                  )}
+                  style={{
+                    clipPath: "polygon(0 0, 100% 0, calc(100% - 6px) 100%, 0 100%)",
+                  }}
+                >
+                  <span className="text-[9px] font-bold text-accent mr-1.5">0{index + 1}</span>
+                  {category}
+                  
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeCategoryIndicator"
+                      className="absolute bottom-0 left-2 right-2 h-[2px] bg-primary"
+                      transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                      style={{ boxShadow: "0 0 10px rgba(0, 229, 255, 0.8)" }}
+                    />
+                  )}
+                </button>
+              </div>
+            );
+          })}
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-[1.15fr_0.85fr]">
-          <Panel className="motion-panel p-6 md:p-8">
-            <div className="panel-line grid gap-5 pt-6 md:grid-cols-2">
-              {filteredSkills.map((skill) => (
-                <div key={skill.name} className="rounded-[1.4rem] border border-white/8 bg-white/[0.03] p-5 text-left">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">
-                        {skill.category}
-                      </p>
-                      <h3 className="mt-2 text-lg font-semibold tracking-[-0.03em] text-foreground">
-                        {skill.name}
-                      </h3>
+        <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+          {/* Main skills listing */}
+          <Panel className="p-6 md:p-8" variant="default">
+            <div className="grid gap-5 md:grid-cols-2 pt-2">
+              <AnimatePresence mode="popLayout">
+                {filteredSkills.map((skill, index) => (
+                  <motion.div
+                    key={`${activeCategory}-${skill.name}`}
+                    initial={{ opacity: 0, y: 15, skewX: -2 }}
+                    animate={{ opacity: 1, y: 0, skewX: 0 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                    className="border border-primary/10 bg-primary/[0.03] p-4 text-left hover:border-primary/40 hover:bg-primary/[0.06] transition-all duration-300"
+                    style={{
+                      clipPath: "polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%)",
+                    }}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-accent">
+                          {skill.category}
+                        </p>
+                        <h3 className="mt-1 text-base font-bold uppercase tracking-wide text-foreground">
+                          {skill.name}
+                        </h3>
+                      </div>
+                      <span className="text-xs font-mono font-bold text-primary">{skill.level}%</span>
                     </div>
-                    <span className="text-sm font-medium text-foreground">{skill.level}%</span>
-                  </div>
-                  <p className="mt-3 text-sm leading-6 text-muted-foreground">{skill.note}</p>
-                  <div className="mt-5 h-2 rounded-full bg-background/80">
-                    <div
-                      className="h-2 rounded-full bg-linear-to-r from-primary via-sky-300 to-accent transition-all duration-700"
-                      style={{ width: `${skill.level}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
+                    <p className="mt-2 text-xs leading-5 text-muted-foreground/80">{skill.note}</p>
+                    
+                    <div className="mt-4 h-1.5 bg-secondary/80 border border-primary/10">
+                      <div
+                        className="h-full bg-gradient-to-r from-primary via-cyan-400 to-accent transition-all duration-700"
+                        style={{ width: `${skill.level}%` }}
+                      />
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
           </Panel>
 
-          <Panel className="motion-panel p-6 md:p-8">
-            <div className="panel-line space-y-6 pt-6 text-left">
+          {/* Workflow details */}
+          <Panel className="p-6 md:p-8" variant="alt">
+            <div className="space-y-6 pt-2 text-left">
               <div>
-                <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
-                  Workflow approach
+                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-primary/70">
+                  WORKFLOW APPROACH // ACTIVE
                 </p>
-                <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-foreground">
+                <h3 className="mt-2 text-2xl font-black uppercase tracking-tight text-foreground leading-snug">
                   High-quality user interfaces, grounded implementation choices.
                 </h3>
               </div>
-              <div className="space-y-4">
+              
+              <div className="space-y-3">
                 {[
                   "Structure layouts before styling details.",
                   "Use motion to guide attention, not distract from content.",
                   "Keep components reusable so redesigns stay maintainable.",
-                ].map((item) => (
-                  <div key={item} className="rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3 text-sm leading-6 text-muted-foreground">
-                    {item}
+                ].map((item, index) => (
+                  <div key={item} className="flex items-start gap-3 border border-primary/10 bg-primary/[0.02] px-4 py-3 text-xs leading-5 text-muted-foreground"
+                       style={{ clipPath: "polygon(8px 0, 100% 0, 100% 100%, 0 100%)" }}>
+                    <span className="font-mono text-accent font-bold">0{index + 1} //</span>
+                    <span>{item}</span>
                   </div>
                 ))}
               </div>
-              <div className="rounded-[1.5rem] border border-primary/20 bg-primary/8 p-5">
-                <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">Best fit</p>
-                <p className="mt-3 text-sm leading-7 text-foreground">
+              
+              <div className="border border-primary/20 bg-primary/10 p-5"
+                   style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)" }}>
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent">BEST FIT</p>
+                <p className="mt-2 text-xs leading-6 text-foreground/90">
                   Portfolio sites, marketing surfaces, and interface-heavy products that need a cleaner visual system without sacrificing responsiveness.
                 </p>
               </div>

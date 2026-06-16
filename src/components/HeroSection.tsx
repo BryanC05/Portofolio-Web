@@ -1,163 +1,197 @@
 import { ArrowDownRight, ArrowRight, Github, Linkedin } from "lucide-react";
 import { Panel } from "@/components/Panel";
-import { useEffect, useRef, useState } from "react";
-
-const stats = [
-  { label: "Primary focus", value: "Web Applications" },
-  { label: "Delivery mode", value: "Full-stack development" },
-  { label: "Current status", value: "Available for projects" },
-];
-
-const skills = [
-  { name: "React interface architecture", level: 92 },
-  { name: "Tailwind design systems", level: 86 },
-  { name: "Motion and responsive polish", level: 80 },
-];
+import { motion } from "framer-motion";
+import { usePortfolioData } from "@/hooks/usePortfolioData";
 
 export const HeroSection = () => {
-  const [barsVisible, setBarsVisible] = useState(false);
-  const barRef = useRef<HTMLDivElement>(null);
+  const { data, loading } = usePortfolioData();
 
-  useEffect(() => {
-    const el = barRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setBarsVisible(true); obs.disconnect(); } },
-      { threshold: 0.3 }
+  if (loading || !data) {
+    return (
+      <div className="h-96 flex items-center justify-center">
+        <span className="text-xs font-bold uppercase tracking-[0.25em] text-primary/60 animate-pulse">
+          LOADING SYSTEM METRICS...
+        </span>
+      </div>
     );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
+  }
+
+  const { profile, stats, skillOverview, philosophy } = data;
 
   return (
-    <section id="hero" className="relative px-4 pb-20 pt-32 sm:pt-36 lg:pb-28 lg:pt-40">
+    <section id="hero" className="relative px-4 pb-20 pt-32 sm:pt-36 lg:pb-28 lg:pt-40 overflow-hidden">
+      {/* Background XXII (Fool Arcana) watermark text */}
+      <div className="absolute right-[-10%] top-[10%] select-none pointer-events-none font-bold text-[24vw] leading-none text-primary/[0.02] tracking-tighter uppercase font-mono z-0">
+        XXII
+      </div>
+
       <div className="container relative z-10">
-        <div className="grid items-center gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="max-w-3xl space-y-8 text-left">
-            <div className="space-y-5">
-              <div className="flex flex-wrap gap-3 opacity-0 animate-fade-in-delay-1">
-                <span className="data-pill">Bekasi, Indonesia</span>
-              </div>
-              <h1 className="max-w-4xl text-4xl font-semibold leading-tight tracking-[-0.06em] text-foreground opacity-0 animate-fade-in md:text-6xl lg:text-[5.25rem]">
-                Designing and building{" "}
-                <span className="text-gradient text-glow">functional web experiences</span>{" "}
-                with product clarity.
-              </h1>
-              <p className="max-w-2xl text-base leading-7 text-muted-foreground opacity-0 animate-fade-in-delay-2 md:text-lg">
-                I'm Bryan Chan, a developer focused on interfaces that feel sharp, responsive,
-                and intentionally composed—bridging modern frontend engineering, thoughtful UX,
-                and production-ready execution.
-              </p>
+            <div className="space-y-6">
+              <motion.div 
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+                className="flex flex-wrap gap-3"
+              >
+                <span className="data-pill">{profile.location.toUpperCase()}</span>
+                <span className="data-pill-gold">
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent animate-ping mr-1" />
+                  {profile.status.toUpperCase()}
+                </span>
+              </motion.div>
+
+              <motion.h1 
+                initial={{ opacity: 0, y: 30, skewX: -3 }}
+                animate={{ opacity: 1, y: 0, skewX: 0 }}
+                transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="max-w-4xl text-4xl font-extrabold leading-none tracking-tight text-foreground md:text-6xl lg:text-[4.50rem] uppercase"
+              >
+                Designing and building <br />
+                <span className="p3r-gradient text-glow inline-block py-1">
+                  {profile.headline.split(" experiences")[0]}
+                </span> <br />
+                experiences.
+              </motion.h1>
+
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="max-w-xl text-sm leading-7 text-muted-foreground/90 md:text-base border-l border-primary/30 pl-4"
+              >
+                {profile.description}
+              </motion.p>
             </div>
 
-            <div className="flex flex-col gap-4 opacity-0 animate-fade-in-delay-3 sm:flex-row sm:items-center">
+            {/* Buttons & Links */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex flex-col gap-4 sm:flex-row sm:items-center"
+            >
               <a href="#projects" className="action-button">
-                View my work <ArrowRight size={18} />
+                View my work <ArrowRight size={14} className="text-glow" />
               </a>
               <a href="#contact" className="action-button-secondary">
-                Let's talk <ArrowDownRight size={18} />
+                Let's talk <ArrowDownRight size={14} />
               </a>
-            </div>
+            </motion.div>
 
-            <div className="flex flex-wrap items-center gap-3 opacity-0 animate-fade-in-delay-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="flex flex-wrap items-center gap-3 pt-2"
+            >
               <a
                 href="https://github.com/BryanC05"
                 target="_blank"
                 rel="noreferrer"
-                className="data-pill transition-colors hover:border-primary/35 hover:text-foreground"
+                className="data-pill hover:border-primary hover:text-foreground"
               >
-                <Github size={14} /> GitHub
+                <Github size={13} className="mr-1" /> GitHub
               </a>
               <a
                 href="https://www.linkedin.com/in/bryan-chan-9705013a9/"
                 target="_blank"
                 rel="noreferrer"
-                className="data-pill transition-colors hover:border-primary/35 hover:text-foreground"
+                className="data-pill hover:border-primary hover:text-foreground"
               >
-                <Linkedin size={14} /> LinkedIn
+                <Linkedin size={13} className="mr-1" /> LinkedIn
               </a>
-            </div>
+            </motion.div>
           </div>
 
-          <Panel className="motion-panel p-6 md:p-7">
-            <div className="hud-grid absolute inset-0 opacity-20" />
-            <div className="relative space-y-6">
-              <div className="flex items-start justify-between gap-4 border-b border-border/50 pb-5">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
-                    Developer profile
-                  </p>
-                  <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-foreground">
-                    Bryan Chan
-                  </h2>
-                </div>
-                <span className="rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1 text-xs uppercase tracking-[0.24em] text-emerald-500 dark:text-emerald-300">
-                  Online
-                </span>
-              </div>
-
-              <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-                {stats.map((item) => (
-                  <div key={item.label} className="rounded-2xl border border-border/50 bg-muted/30 p-4 transition-all duration-300 hover:border-primary/20 hover:bg-primary/5 dark:border-border dark:bg-muted/10">
-                    <p className="text-[0.7rem] uppercase tracking-[0.22em] text-muted-foreground">
-                      {item.label}
+          {/* Right HUD Profile Card */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <Panel className="p-6 md:p-7" variant="diagonal">
+              {/* Scan grid and glow lights */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_100%_0%,rgba(0,229,255,0.08),transparent_40%)]" />
+              
+              <div className="relative space-y-6">
+                {/* Header */}
+                <div className="flex items-start justify-between gap-4 border-b border-primary/20 pb-4">
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-primary/70">
+                      MEMBER PROFILE // SYSTEM LOADED
                     </p>
-                    <p className="mt-3 text-sm font-medium leading-6 text-foreground">
-                      {item.value}
-                    </p>
+                    <h2 className="mt-1 text-2xl font-black uppercase tracking-tight text-foreground text-glow">
+                      {profile.name}
+                    </h2>
                   </div>
-                ))}
-              </div>
+                  <span className="text-[10px] font-bold border border-accent/40 bg-accent/10 px-3 py-1 uppercase tracking-widest text-accent">
+                    {profile.seesBadge}
+                  </span>
+                </div>
 
-              <div className="grid gap-4 md:grid-cols-[0.9fr_1.1fr]" ref={barRef}>
-                <div className="rounded-[1.5rem] border border-primary/15 bg-primary/5 p-5 dark:border-primary/20 dark:bg-primary/8">
-                  <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
-                    Skills & Expertise
+                {/* Grid stats */}
+                <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+                  {stats.map((item: any) => (
+                    <div key={item.label} className="border border-primary/15 bg-primary/5 p-3"
+                         style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)" }}>
+                      <p className="text-[8px] font-bold uppercase tracking-[0.18em] text-primary/60">
+                        {item.code} // {item.label}
+                      </p>
+                      <p className="mt-1 text-xs font-bold uppercase tracking-wide text-foreground">
+                        {item.value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Progress bars / Skills overview */}
+                <div className="space-y-4 border-t border-primary/20 pt-4">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-primary/70">
+                    SKILL ARCHITECTURE
                   </p>
-                  <div className="mt-5 space-y-4">
-                    {skills.map((item, index) => (
-                      <div key={item.name} className="space-y-2">
-                        <div className="flex items-center justify-between text-sm text-muted-foreground">
-                          <span>{item.name}</span>
-                          <span>{item.level}%</span>
+                  <div className="space-y-3">
+                    {skillOverview.map((skill: any) => (
+                      <div key={skill.name} className="space-y-1">
+                        <div className="flex items-center justify-between text-xs font-semibold text-muted-foreground">
+                          <span className="uppercase text-[9px] font-bold tracking-wider">{skill.name}</span>
+                          <span className="text-primary font-mono font-bold">{skill.value}%</span>
                         </div>
-                        <div className="h-2 rounded-full bg-secondary">
-                          <div
-                            className="h-2 rounded-full transition-all duration-1000 ease-out"
-                            style={{
-                              width: barsVisible ? `${item.level}%` : "0%",
-                              transitionDelay: `${index * 200}ms`,
-                              background: "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)))"
-                            }}
-                          />
+                        <div className="h-1.5 bg-secondary/80 border border-primary/10" style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 2px) 100%, 0 100%)" }}>
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${skill.value}%` }}
+                            transition={{ duration: 1, delay: 0.5 }}
+                            className="h-full bg-gradient-to-r from-primary via-cyan-400 to-accent relative"
+                          >
+                            <span className="absolute right-0 top-0 bottom-0 w-[4px] bg-white animate-pulse" />
+                          </motion.div>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="rounded-[1.5rem] border border-border/50 bg-muted/20 p-5 dark:border-border dark:bg-card/30">
-                  <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
-                    Work Philosophy
+                {/* Work Philosophy */}
+                <div className="border-t border-primary/20 pt-4 space-y-2">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-primary/70">
+                    PHILOSOPHY // INTACT
                   </p>
-                  <div className="mt-4 space-y-4">
-                    <div className="rounded-[1.25rem] border border-border/50 bg-muted/30 p-4 dark:border-border dark:bg-muted/10">
-                      <p className="text-sm text-muted-foreground">Currently crafting web experiences with stronger visual systems, section choreography, and high-fidelity interaction design.</p>
-                    </div>
-                    <div className="flex items-center justify-between rounded-[1.25rem] border border-border/50 px-4 py-3 dark:border-border">
-                      <span className="text-sm text-muted-foreground">Project focus</span>
-                      <span className="text-sm font-medium text-foreground">Clarity × Motion × Performance</span>
-                    </div>
+                  <div className="border border-primary/15 bg-primary/5 p-3 text-xs leading-5 text-muted-foreground"
+                       style={{ clipPath: "polygon(8px 0, 100% 0, 100% 100%, 0 100%)" }}>
+                    {philosophy}
                   </div>
                 </div>
               </div>
-            </div>
-          </Panel>
+            </Panel>
+          </motion.div>
         </div>
 
-        <div className="mt-12 flex items-center gap-3 text-sm text-muted-foreground opacity-0 animate-fade-in-delay-4">
-          <span className="h-px w-16" style={{ background: "linear-gradient(90deg, hsl(var(--primary) / 0.8), transparent)" }} />
-          Scroll to learn more about my work
+        {/* Scroll prompt */}
+        <div className="mt-12 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.25em] text-primary/60">
+          <span className="h-[2px] w-12 bg-gradient-to-r from-primary to-transparent" />
+          Scroll down to initiate menu navigation
         </div>
       </div>
     </section>

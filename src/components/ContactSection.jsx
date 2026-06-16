@@ -1,52 +1,29 @@
-import { Linkedin, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
+import { Linkedin, Mail, MapPin, MessageCircle, Phone, Send, Github } from "lucide-react";
 import { useState } from "react";
 import { Panel } from "@/components/Panel";
 import { SectionShell } from "@/components/SectionShell";
 import { useToast } from "@/hooks/use-toast";
+import { usePortfolioData } from "@/hooks/usePortfolioData";
 
-const contactMethods = [
-  {
-    label: "Primary mail",
-    value: "becejob@gmail.com",
-    href: "mailto:becejob@gmail.com",
-    icon: Mail,
-  },
-  {
-    label: "Direct line",
-    value: "+62 855-9167-6171",
-    href: "tel:+6285591676171",
-    icon: Phone,
-  },
-  {
-    label: "Location",
-    value: "Bekasi, Harapan Indah",
-    href: "#contact",
-    icon: MapPin,
-  },
-];
-
-const socialLinks = [
-  {
-    name: "LinkedIn",
-    href: "https://www.linkedin.com/in/bryan-chan-9705013a9/",
-    icon: Linkedin,
-  },
-  {
-    name: "GitHub",
-    href: "https://github.com/BryanC05",
-    icon: Send,
-  },
-  {
-    name: "WhatsApp",
-    href: "https://wa.me/6285591676171",
-    icon: MessageCircle,
-  },
-];
+const iconMap = {
+  Mail,
+  Phone,
+  MapPin,
+  Linkedin,
+  Send,
+  Github,
+  MessageCircle,
+};
 
 export const ContactSection = () => {
+  const { data, loading } = usePortfolioData();
   const { toast } = useToast();
   const [formState, setFormState] = useState({ name: "", email: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  if (loading || !data) return null;
+
+  const { contactMethods, socialLinks } = data;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -69,7 +46,7 @@ export const ContactSection = () => {
       if (response.ok) {
         toast({
           title: "Message sent",
-          description: "Thanks for reaching out! I'll get back to you at becejob@gmail.com soon.",
+          description: "Thanks for reaching out! I'll get back to you soon.",
         });
         setFormState({ name: "", email: "", message: "" });
       } else {
@@ -96,67 +73,77 @@ export const ContactSection = () => {
       className="pb-28"
     >
       <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <Panel className="motion-panel p-6 md:p-8">
-          <div className="panel-line space-y-6 pt-6 text-left">
+        {/* Left column details */}
+        <Panel className="p-6 md:p-8" variant="default">
+          <div className="space-y-6 pt-2 text-left">
             <div>
-              <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Get in touch</p>
-              <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-foreground md:text-3xl">
+              <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-primary/70">GET IN TOUCH // SEES</p>
+              <h3 className="mt-2 text-2xl font-black uppercase tracking-tight text-foreground md:text-3xl leading-snug">
                 Let’s turn your idea into a polished digital experience.
               </h3>
             </div>
 
             <div className="space-y-4">
-              {contactMethods.map(({ label, value, href, icon: Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  className="flex items-center gap-4 rounded-[1.3rem] border border-white/8 bg-white/[0.03] p-4 transition-colors hover:border-primary/25 hover:bg-primary/6"
-                >
-                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 text-primary">
-                    <Icon size={20} />
-                  </span>
-                  <span>
-                    <span className="block text-[0.7rem] uppercase tracking-[0.22em] text-muted-foreground">{label}</span>
-                    <span className="mt-1 block text-sm font-medium text-foreground">{value}</span>
-                  </span>
-                </a>
-              ))}
+              {contactMethods.map(({ label, value, href, iconName }) => {
+                const Icon = iconMap[iconName] || Mail;
+                return (
+                  <a
+                    key={label}
+                    href={href}
+                    className="flex items-center gap-4 border border-primary/10 bg-primary/[0.03] p-4 transition-all duration-300 hover:border-primary/40 hover:bg-primary/[0.08]"
+                    style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%)" }}
+                  >
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center border border-primary/30 bg-primary/10 text-primary transition-all duration-300 hover:bg-primary/25 animate-pulse-subtle"
+                          style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
+                      <Icon size={18} className="text-glow" />
+                    </span>
+                    <div>
+                      <span className="block text-[8px] font-bold uppercase tracking-[0.2em] text-accent">{label}</span>
+                      <span className="mt-0.5 block text-xs font-bold text-foreground uppercase tracking-wide">{value}</span>
+                    </div>
+                  </a>
+                );
+              })}
             </div>
 
-            <div className="rounded-[1.5rem] border border-white/8 bg-white/[0.03] p-5">
-              <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">Availability</p>
-              <p className="mt-3 text-sm leading-7 text-foreground">
-                Currently open to freelance opportunities, part-time roles, and project-based work with a focus on web development.
-              </p>
+            <div className="border border-primary/10 bg-primary/[0.02] p-5 text-xs leading-5 text-muted-foreground/80"
+                 style={{ clipPath: "polygon(8px 0, 100% 0, 100% 100%, 0 100%)" }}>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary mb-2">AVAILABILITY</p>
+              Currently open to freelance opportunities, part-time roles, and project-based work with a focus on web development.
             </div>
 
-            <div className="flex flex-wrap gap-3">
-              {socialLinks.map(({ name, href, icon: Icon }) => (
-                <a
-                  key={name}
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="data-pill transition-colors hover:border-primary/35 hover:text-foreground"
-                >
-                  <Icon size={14} /> {name}
-                </a>
-              ))}
+            {/* Social icons */}
+            <div className="flex flex-wrap gap-2 pt-2 border-t border-primary/15">
+              {socialLinks.map(({ name, href, iconName }) => {
+                const Icon = iconMap[iconName] || Send;
+                return (
+                  <a
+                    key={name}
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="data-pill hover:border-primary hover:text-foreground"
+                  >
+                    <Icon size={13} className="mr-1" /> {name}
+                  </a>
+                );
+              })}
             </div>
           </div>
         </Panel>
 
-        <Panel className="motion-panel p-6 md:p-8">
-          <form onSubmit={handleSubmit} className="panel-line space-y-5 pt-6 text-left">
+        {/* Right column form */}
+        <Panel className="p-6 md:p-8" variant="alt">
+          <form onSubmit={handleSubmit} className="space-y-5 pt-2 text-left">
             <div>
-              <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Send a message</p>
-              <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-foreground">
+              <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-primary/70">SEND A MESSAGE // TERMINAL</p>
+              <h3 className="mt-2 text-xl font-black uppercase tracking-tight text-foreground text-glow">
                 Let's discuss your project.
               </h3>
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2">
-              <label className="space-y-2 text-sm text-muted-foreground">
+              <label className="space-y-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground">
                 <span>Name</span>
                 <input
                   type="text"
@@ -164,11 +151,12 @@ export const ContactSection = () => {
                   value={formState.name}
                   onChange={handleChange}
                   required
-                  placeholder="Your name"
-                  className="w-full rounded-2xl border border-input bg-background/80 px-4 py-3 text-foreground placeholder:text-muted-foreground/70"
+                  placeholder="YOUR NAME"
+                  className="w-full border border-primary/25 bg-[rgba(8,18,34,0.65)] px-4 py-3 text-xs uppercase tracking-widest text-foreground placeholder:text-muted-foreground/40 transition-all duration-300 focus:border-primary focus:shadow-[0_0_15px_rgba(0,229,255,0.25)] focus:bg-[rgba(8,18,34,0.85)]"
+                  style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)" }}
                 />
               </label>
-              <label className="space-y-2 text-sm text-muted-foreground">
+              <label className="space-y-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground">
                 <span>Email</span>
                 <input
                   type="email"
@@ -176,13 +164,14 @@ export const ContactSection = () => {
                   value={formState.email}
                   onChange={handleChange}
                   required
-                  placeholder="name@example.com"
-                  className="w-full rounded-2xl border border-input bg-background/80 px-4 py-3 text-foreground placeholder:text-muted-foreground/70"
+                  placeholder="NAME@EXAMPLE.COM"
+                  className="w-full border border-primary/25 bg-[rgba(8,18,34,0.65)] px-4 py-3 text-xs uppercase tracking-widest text-foreground placeholder:text-muted-foreground/40 transition-all duration-300 focus:border-primary focus:shadow-[0_0_15px_rgba(0,229,255,0.25)] focus:bg-[rgba(8,18,34,0.85)]"
+                  style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)" }}
                 />
               </label>
             </div>
 
-            <label className="block space-y-2 text-sm text-muted-foreground">
+            <label className="block space-y-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground">
               <span>Message</span>
               <textarea
                 name="message"
@@ -190,14 +179,15 @@ export const ContactSection = () => {
                 onChange={handleChange}
                 required
                 rows={7}
-                placeholder="Share your project details, timeline, or any questions you have."
-                className="w-full resize-none rounded-[1.5rem] border border-input bg-background/80 px-4 py-3 text-foreground placeholder:text-muted-foreground/70"
+                placeholder="SHARE YOUR PROJECT DETAILS, TIMELINE, OR ANY QUESTIONS YOU HAVE."
+                className="w-full resize-none border border-primary/25 bg-[rgba(8,18,34,0.65)] px-4 py-3 text-xs uppercase tracking-widest text-foreground placeholder:text-muted-foreground/40 transition-all duration-300 focus:border-primary focus:shadow-[0_0_15px_rgba(0,229,255,0.25)] focus:bg-[rgba(8,18,34,0.85)]"
+                style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)" }}
               />
             </label>
 
             <button type="submit" disabled={isSubmitting} className="action-button w-full sm:w-auto">
               {isSubmitting ? "Sending..." : "Send message"}
-              <Send size={16} />
+              <Send size={13} className="text-glow" />
             </button>
           </form>
         </Panel>

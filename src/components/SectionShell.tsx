@@ -1,15 +1,14 @@
 import { cn } from "@/lib/utils";
-import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { type ReactNode } from "react";
+import { motion } from "framer-motion";
 
 interface SectionShellProps {
-  id: string;
+  id?: string;
   eyebrow?: string;
   title?: string;
   accent?: string;
   description?: string;
   align?: "left" | "center";
-  children: ReactNode;
+  children: React.ReactNode;
   className?: string;
   contentClassName?: string;
 }
@@ -26,33 +25,52 @@ export const SectionShell = ({
   contentClassName,
 }: SectionShellProps) => {
   const centered = align === "center";
-  const sectionRef = useScrollReveal<HTMLElement>();
 
   return (
-    <section id={id} ref={sectionRef} className={cn("relative px-4 py-24 sm:py-28", className)}>
+    <section id={id} className={cn("relative px-4 py-24 sm:py-28 overflow-hidden", className)}>
+      {/* Background Section-Specific Accent Line */}
+      <div className="absolute top-0 left-[-10%] w-[120%] h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent rotate-[-1deg]" />
+
       <div className="container relative z-10">
         {(eyebrow || title || description) && (
-          <header
+          <motion.header
+            initial={{ opacity: 0, x: -30, skewX: -6 }}
+            whileInView={{ opacity: 1, x: 0, skewX: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className={cn(
               "mb-10 space-y-5 md:mb-14",
               centered ? "mx-auto max-w-3xl text-center" : "max-w-3xl text-left"
             )}
           >
-            {eyebrow && <span className="section-eyebrow reveal-up">{eyebrow}</span>}
-            {title && (
-              <h2 className="reveal-up text-3xl font-semibold tracking-[-0.04em] text-foreground md:text-5xl">
+            {eyebrow ? (
+              <span className="section-eyebrow">
+                <span className="text-glow mr-2">//</span> {eyebrow}
+              </span>
+            ) : null}
+            {title ? (
+              <h2 className="text-3xl font-bold uppercase tracking-tight text-foreground md:text-5xl">
                 {title}{" "}
-                {accent && <span className="text-gradient">{accent}</span>}
+                {accent ? <span className="p3r-gradient text-glow">{accent}</span> : null}
               </h2>
-            )}
-            {description && (
-              <p className="reveal-up text-base leading-7 text-muted-foreground md:text-lg">
+            ) : null}
+            {description ? (
+              <p className="text-sm font-medium leading-7 text-muted-foreground/90 md:text-base border-l border-primary/20 pl-4 mt-3">
                 {description}
               </p>
-            )}
-          </header>
+            ) : null}
+          </motion.header>
         )}
-        <div className={contentClassName}>{children}</div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 40, skewX: -2 }}
+          whileInView={{ opacity: 1, y: 0, skewX: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className={contentClassName}
+        >
+          {children}
+        </motion.div>
       </div>
     </section>
   );

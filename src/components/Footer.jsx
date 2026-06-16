@@ -1,31 +1,49 @@
 import { ArrowUpRight } from "lucide-react";
+import { usePortfolioData } from "@/hooks/usePortfolioData";
 
 export const Footer = () => {
+  const { data, loading } = usePortfolioData();
+
+  if (loading || !data) return null;
+
+  const { profile } = data;
+
   return (
-    <footer className="relative px-4 pb-10">
-      <div className="container">
-        <div className="flex flex-col gap-4 rounded-[1.6rem] border border-white/10 bg-background/70 px-5 py-5 backdrop-blur-xl md:flex-row md:items-center md:justify-between md:px-6">
+    <footer className="relative px-4 pb-10 overflow-hidden">
+      {/* Decorative Diagonal Border Sweep */}
+      <div className="absolute top-0 left-[-10%] w-[120%] h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent rotate-[-1deg]" />
+
+      <div className="container relative z-10">
+        <div 
+          className="flex flex-col gap-4 border border-primary/20 bg-[rgba(8,18,34,0.8)] px-6 py-6 backdrop-blur-xl md:flex-row md:items-center md:justify-between"
+          style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 16px 100%)" }}
+        >
           <div className="text-left">
-            <p className="text-sm font-medium tracking-[0.18em] text-foreground uppercase">Bryan Chan</p>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary text-glow">
+              {profile.name.toUpperCase()} // DEVELOPER
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground/90 uppercase tracking-wider">
               Interface-focused frontend developer crafting premium web experiences.
             </p>
           </div>
+          
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <span className="data-pill justify-center">
-              <span className="h-2 w-2 rounded-full bg-emerald-400" />
-              Status: available for select projects
+            <span className="data-pill-gold justify-center">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent animate-ping" />
+              STATUS: SELECT PROJECTS AVAILABLE
             </span>
             <a
               href="#hero"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-foreground transition-colors hover:border-primary/30 hover:bg-primary/10"
+              className="action-button-secondary py-2.5 px-4 text-glow"
+              style={{ clipPath: "polygon(8px 0, 100% 0, 100% 100%, 0 100%)" }}
             >
-              Back to top <ArrowUpRight size={16} />
+              UPWARD <ArrowUpRight size={13} className="ml-1" />
             </a>
           </div>
         </div>
-        <p className="mt-4 text-center text-xs uppercase tracking-[0.24em] text-muted-foreground">
-          © {new Date().getFullYear()} Bryan Chan · Available for new projects
+        
+        <p className="mt-6 text-center text-[9px] font-bold uppercase tracking-[0.3em] text-primary/45">
+          © {new Date().getFullYear()} {profile.name.toUpperCase()} // ALL SYSTEMS OPERATIONAL
         </p>
       </div>
     </footer>

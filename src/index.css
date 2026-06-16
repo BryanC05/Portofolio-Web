@@ -28,9 +28,11 @@
   --animate-fade-in-delay-2: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.24s forwards;
   --animate-fade-in-delay-3: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.36s forwards;
   --animate-fade-in-delay-4: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.48s forwards;
-  --animate-orbit: orbit 16s linear infinite;
-  --animate-scanline: scanline 12s linear infinite;
+  --animate-orbit: orbit 24s linear infinite;
+  --animate-scanline: scanline 8s linear infinite;
   --animate-grid-pan: grid-pan 22s linear infinite;
+  --animate-p3r-float: p3r-float 15s ease-in-out infinite;
+  --animate-water-flow: water-flow 25s ease-in-out infinite;
 
   @keyframes float {
     0%,
@@ -42,33 +44,53 @@
     }
   }
 
+  @keyframes p3r-float {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg) scale(1);
+    }
+    50% {
+      transform: translateY(-20px) rotate(8deg) scale(1.03);
+    }
+  }
+
+  @keyframes water-flow {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(-10px, 15px) scale(1.05);
+    }
+  }
+
   @keyframes pulse-subtle {
     0%,
     100% {
-      opacity: 0.5;
+      opacity: 0.4;
+      filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.2));
     }
     50% {
-      opacity: 0.9;
+      opacity: 0.8;
+      filter: drop-shadow(0 0 25px rgba(0, 229, 255, 0.5));
     }
   }
 
   @keyframes fade-in {
     from {
       opacity: 0;
-      transform: translate3d(0, 18px, 0);
+      transform: translate3d(-15px, 20px, 0) skewX(-4deg);
     }
     to {
       opacity: 1;
-      transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0) skewX(0deg);
     }
   }
 
   @keyframes orbit {
     from {
-      transform: rotate(0deg) translateX(18px) rotate(0deg);
+      transform: rotate(0deg);
     }
     to {
-      transform: rotate(360deg) translateX(18px) rotate(-360deg);
+      transform: rotate(360deg);
     }
   }
 
@@ -79,7 +101,7 @@
     }
     10%,
     90% {
-      opacity: 0.22;
+      opacity: 0.15;
     }
     100% {
       transform: translateY(100vh);
@@ -99,24 +121,25 @@
 
 @layer base {
   :root {
-    --background: 10% 8 255;
-    --foreground: 93% 4 235;
-    --card: 16% 7 250;
-    --card-foreground: 94% 4 235;
-    --popover: 12% 7 250;
-    --popover-foreground: 94% 4 235;
-    --primary: 76% 28 220;
-    --primary-foreground: 10% 7 255;
-    --secondary: 23% 6 248;
-    --secondary-foreground: 88% 4 232;
-    --muted: 20% 5 246;
-    --muted-foreground: 72% 4 235;
-    --accent: 82% 20 88;
-    --accent-foreground: 12% 7 255;
-    --border: 31% 7 246;
-    --input: 25% 6 248;
-    --ring: 74% 26 220;
-    --destructive: 62% 24 28;
+    /* P3R LCH Palette: Deep Midnight Blue background, Bright Sky Cyan primary, Lunar Gold accent */
+    --background: 8% 12 235;        /* Deep Velvet Blue (#080f1a) */
+    --foreground: 95% 8 210;        /* Cool White-Cyan (#e8f1f5) */
+    --card: 12% 16 230;             /* Dark P3R Blue (#0c192d) */
+    --card-foreground: 94% 6 210;
+    --popover: 10% 15 230;
+    --popover-foreground: 94% 6 210;
+    --primary: 80% 60 195;          /* Vivid Cyan (#00e5ff) */
+    --primary-foreground: 10% 20 230;
+    --secondary: 16% 18 225;        /* Muted Velvet Blue (#142742) */
+    --secondary-foreground: 88% 8 210;
+    --muted: 14% 10 230;
+    --muted-foreground: 68% 10 215;  /* Cyan-gray */
+    --accent: 85% 75 85;            /* Lunar Gold Yellow (#ffd700) */
+    --accent-foreground: 10% 20 230;
+    --border: 22% 22 220;           /* Border blue-cyan */
+    --input: 16% 18 225;
+    --ring: 80% 60 195;
+    --destructive: 58% 54 28;
     --destructive-foreground: 96% 2 40;
   }
 
@@ -133,8 +156,9 @@
     font-family: Inter, ui-sans-serif, system-ui, sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
     background-image:
-      radial-gradient(circle at top, rgba(95, 160, 255, 0.14), transparent 32%),
-      linear-gradient(180deg, rgba(6, 10, 18, 1) 0%, rgba(9, 14, 24, 1) 45%, rgba(7, 11, 18, 1) 100%);
+      radial-gradient(circle at 80% 20%, rgba(0, 229, 255, 0.12), transparent 45%),
+      radial-gradient(circle at 15% 70%, rgba(15, 34, 63, 0.6), transparent 50%),
+      linear-gradient(180deg, #070e17 0%, #0a1728 50%, #050b12 100%);
     min-height: 100vh;
   }
 
@@ -143,17 +167,18 @@
     position: fixed;
     inset: 0;
     pointer-events: none;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-    background-size: 72px 72px;
-    mask-image: radial-gradient(circle at center, black 30%, transparent 90%);
-    opacity: 0.35;
+    background-image:
+      linear-gradient(rgba(0, 229, 255, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 229, 255, 0.015) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(circle at center, black 40%, transparent 95%);
+    opacity: 0.45;
     z-index: -2;
   }
 
   ::selection {
-    background: rgba(120, 177, 255, 0.28);
-    color: white;
+    background: rgba(0, 229, 255, 0.35);
+    color: #ffffff;
   }
 
   a,
@@ -167,7 +192,7 @@
   button:focus-visible,
   input:focus-visible,
   textarea:focus-visible {
-    @apply ring-2 ring-ring ring-offset-2 ring-offset-background;
+    @apply ring-2 ring-primary/60 ring-offset-2 ring-offset-background;
   }
 }
 
@@ -194,60 +219,90 @@
   }
 }
 
+/* P3R CUSTOM DESIGN SYSTEM UTILITIES */
+
 @utility text-glow {
-  text-shadow: 0 0 24px rgba(114, 187, 255, 0.22);
+  text-shadow: 0 0 18px rgba(0, 229, 255, 0.6), 0 0 4px rgba(0, 229, 255, 0.3);
 }
 
-@utility text-gradient {
-  background: linear-gradient(135deg, rgba(233, 243, 255, 1) 10%, rgba(113, 184, 255, 1) 55%, rgba(255, 210, 125, 1) 100%);
+@utility text-glow-gold {
+  text-shadow: 0 0 18px rgba(255, 215, 0, 0.5), 0 0 4px rgba(255, 215, 0, 0.3);
+}
+
+@utility p3r-gradient {
+  background: linear-gradient(135deg, #ffffff 10%, #00e5ff 60%, #ffd700 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-@utility hud-panel {
-  @apply relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-card/70 backdrop-blur-xl;
-  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+@utility p3r-gradient-blue {
+  background: linear-gradient(135deg, #00e5ff 0%, #1565c0 70%, #0a192f 100%);
 }
 
-@utility hud-panel-soft {
-  @apply relative overflow-hidden rounded-[1.5rem] border border-white/8 bg-secondary/40 backdrop-blur-md;
+@utility p3r-panel {
+  @apply relative overflow-hidden border border-primary/25 bg-[rgba(8,18,34,0.78)] backdrop-blur-xl transition-all duration-300;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 24px) 100%, 0 100%);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), inset 0 0 15px rgba(0, 229, 255, 0.08);
 }
 
-@utility hud-grid {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 26px 26px;
+@utility p3r-panel-alt {
+  @apply relative overflow-hidden border border-primary/25 bg-[rgba(8,18,34,0.78)] backdrop-blur-xl transition-all duration-300;
+  clip-path: polygon(24px 0, 100% 0, 100% 100%, 0 100%);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), inset 0 0 15px rgba(0, 229, 255, 0.08);
 }
 
-@utility panel-highlight {
-  position: relative;
+@utility p3r-panel-diagonal {
+  @apply relative overflow-hidden border border-primary/25 bg-[rgba(8,18,34,0.78)] backdrop-blur-xl transition-all duration-300;
+  clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px));
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), inset 0 0 15px rgba(0, 229, 255, 0.08);
+}
+
+@utility section-eyebrow {
+  @apply inline-flex items-center gap-3 border-l-2 border-primary bg-primary/8 px-4 py-2 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-primary;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+
+@utility data-pill {
+  @apply inline-flex items-center gap-2 border border-primary/30 bg-primary/5 px-4 py-1.5 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-primary/90 transition-all duration-300;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+}
+
+@utility data-pill-gold {
+  @apply inline-flex items-center gap-2 border border-accent/40 bg-accent/5 px-4 py-1.5 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-accent transition-all duration-300;
+  clip-path: polygon(6px 0, 100% 0, 100% 100%, 0 100%);
+}
+
+@utility action-button {
+  @apply relative overflow-hidden inline-flex items-center justify-center gap-2 border border-primary bg-primary/10 px-6 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-foreground transition-all duration-300 cursor-pointer;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+  box-shadow: 0 8px 25px rgba(0, 229, 255, 0.15);
 
   &::before {
     content: "";
     position: absolute;
-    inset: 1px;
-    border-radius: inherit;
-    background: linear-gradient(145deg, rgba(112, 181, 255, 0.12), transparent 32%, transparent 70%, rgba(255, 203, 112, 0.08));
-    pointer-events: none;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.25), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+
+  &:hover {
+    @apply bg-primary text-background -translate-y-0.5 border-primary shadow-[0_0_35px_rgba(0,229,255,0.45)];
+  }
+
+  &:hover::before {
+    transform: translateX(100%);
   }
 }
 
-@utility section-eyebrow {
-  @apply inline-flex items-center gap-3 rounded-full border border-white/12 bg-white/5 px-4 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-muted-foreground;
-}
-
-@utility data-pill {
-  @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[0.72rem] uppercase tracking-[0.2em] text-muted-foreground;
-}
-
-@utility action-button {
-  @apply inline-flex items-center justify-center gap-2 rounded-full border border-primary/35 bg-primary/15 px-5 py-3 text-sm font-medium text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:bg-primary/25;
-  box-shadow: 0 12px 35px rgba(80, 140, 255, 0.12);
-}
-
 @utility action-button-secondary {
-  @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-white/5 px-5 py-3 text-sm font-medium text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/8;
+  @apply relative overflow-hidden inline-flex items-center justify-center gap-2 border border-white/20 bg-white/5 px-6 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-foreground transition-all duration-300 cursor-pointer;
+  clip-path: polygon(12px 0, 100% 0, 100% 100%, 0 100%);
+
+  &:hover {
+    @apply border-primary/60 bg-primary/10 -translate-y-0.5 text-primary shadow-[0_0_20px_rgba(0,229,255,0.15)];
+  }
 }
 
 @utility panel-line {
@@ -256,36 +311,27 @@
   &::after {
     content: "";
     position: absolute;
-    left: 1.25rem;
-    right: 1.25rem;
+    left: 0;
+    right: 0;
     top: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(117, 188, 255, 0.4), transparent);
+    background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.4), transparent);
   }
 }
 
 @utility motion-panel {
-  @apply transition-transform duration-500 ease-out hover:-translate-y-1;
-}
-
-@utility reveal-up {
-  opacity: 0;
-  animation: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@utility subtle-noise {
-  position: relative;
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.055) 0.7px, transparent 0.7px);
-    background-size: 14px 14px;
-    opacity: 0.08;
-    mix-blend-mode: screen;
-    pointer-events: none;
+  @apply transition-all duration-500 ease-out hover:-translate-y-1 hover:border-primary/55;
+  &:hover {
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 229, 255, 0.15);
   }
+}
+
+@utility p3r-skew {
+  transform: skewX(-8deg);
+}
+
+@utility p3r-skew-cancel {
+  transform: skewX(8deg);
 }
 
 #root {
