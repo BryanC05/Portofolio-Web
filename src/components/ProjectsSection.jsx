@@ -2,6 +2,7 @@ import { ArrowRight, ExternalLink, Github, Info } from "lucide-react";
 import { Panel } from "@/components/Panel";
 import { SectionShell } from "@/components/SectionShell";
 import { usePortfolioData } from "@/hooks/usePortfolioData";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -13,6 +14,7 @@ import {
 
 export const ProjectsSection = () => {
   const { data, loading } = usePortfolioData();
+  const [selectedImage, setSelectedImage] = useState(null);
 
   if (loading || !data) return null;
 
@@ -34,8 +36,10 @@ export const ProjectsSection = () => {
           <Panel className="p-4 md:p-6" variant="default">
             <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr] pt-2">
               {/* Project Image wrapped in custom shear clip path */}
-              <div className="overflow-hidden border border-primary/20 bg-secondary/60 relative group"
-                   style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)" }}>
+              <div className="overflow-hidden border border-primary/20 bg-secondary/60 relative group cursor-pointer"
+                   style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)" }}
+                   onClick={() => setSelectedImage({ url: featured.image, title: featured.title })}
+              >
                 <img
                   src={featured.image}
                   alt={featured.title}
@@ -162,13 +166,16 @@ export const ProjectsSection = () => {
             <Panel key={project.id} className="p-4" variant="alt">
               <div className="grid gap-4 sm:grid-cols-[110px_1fr] sm:items-center pt-1">
                 {/* Styled image with diagonal clip */}
-                <div className="overflow-hidden border border-primary/15 bg-secondary/80"
-                     style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%)" }}>
+                <div className="overflow-hidden border border-primary/15 bg-secondary/80 cursor-pointer group relative"
+                     style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%)" }}
+                     onClick={() => setSelectedImage({ url: project.image, title: project.title })}
+                >
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="h-24 w-full object-cover transition-transform duration-500 hover:scale-105 sm:h-28"
+                    className="h-24 w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-28"
                   />
+                  <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                 </div>
                 
                 <div className="space-y-3 text-left">
@@ -215,6 +222,33 @@ export const ProjectsSection = () => {
           Explore full GitHub archive <ArrowRight size={14} className="text-glow" />
         </a>
       </div>
+
+      {/* Lightbox Image Preview Dialog */}
+      <Dialog open={!!selectedImage} onOpenChange={(open) => !open && setSelectedImage(null)}>
+        <DialogContent 
+          className="max-w-4xl border-primary/30 bg-[rgba(6,14,28,0.98)] text-foreground p-3"
+          style={{
+            clipPath: "polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%)",
+            boxShadow: "0 0 50px rgba(0, 229, 255, 0.35)"
+          }}
+        >
+          <div className="relative w-full h-full flex flex-col items-center">
+            {/* Title & Close Info */}
+            <div className="w-full flex justify-between items-center px-4 py-2 border-b border-primary/20 text-xs font-bold uppercase tracking-wider text-primary">
+              <span>{selectedImage?.title} // INTERFACE VIEW</span>
+              <span className="text-accent text-[9px]">// CLICK OUTSIDE TO DISMISS</span>
+            </div>
+            <div className="w-full p-2 flex justify-center items-center bg-secondary/40 border border-primary/10 mt-3"
+                 style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)" }}>
+              <img
+                src={selectedImage?.url}
+                alt={selectedImage?.title}
+                className="max-h-[75vh] w-auto max-w-full object-contain"
+              />
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </SectionShell>
   );
 };
