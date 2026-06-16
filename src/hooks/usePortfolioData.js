@@ -42,6 +42,10 @@ export const usePortfolioData = () => {
   }, []);
 
   const saveData = async (newData, passcode) => {
+    // Optimistically save locally first so edits are not lost
+    setData(newData);
+    localStorage.setItem("portfolio_data_cache", JSON.stringify(newData));
+
     try {
       const res = await fetch("/api/portfolio", {
         method: "POST",
@@ -57,16 +61,22 @@ export const usePortfolioData = () => {
       const result = await res.json();
 
       if (!res.ok) {
+        if (result.error && result.error.includes("KV Database credentials")) {
+          return {
+            success: true,
+            message: "Saved locally! (Vercel KV is not linked yet. Download config from 'Access & System' -> 'System Config' to commit it permanently.)"
+          };
+        }
         throw new Error(result.error || "Failed to save portfolio data");
       }
 
-      // Update local state and cache
-      setData(newData);
-      localStorage.setItem("portfolio_data_cache", JSON.stringify(newData));
-      return { success: true, message: result.message || "Saved successfully!" };
+      return { success: true, message: result.message || "Saved successfully to cloud!" };
     } catch (err) {
-      console.error("Save failed:", err);
-      return { success: false, error: err.message };
+      console.warn("Cloud save failed, but changes are saved in browser cache:", err);
+      return {
+        success: true,
+        message: `Saved locally! (Cloud sync failed: ${err.message}. Download config from 'Access & System' to persist permanently.)`
+      };
     }
   };
 
