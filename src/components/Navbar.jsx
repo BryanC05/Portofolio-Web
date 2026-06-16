@@ -48,7 +48,7 @@ export const Navbar = () => {
         <div
           className={cn(
             "mx-auto flex items-center justify-between gap-4 border px-4 py-3 md:px-6 transition-all duration-300",
-            "bg-[rgba(8,18,34,0.85)] backdrop-blur-xl border-primary/25",
+            "bg-[rgba(8,18,34,0.96)] border-primary/25",
             isScrolled
               ? "shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_20px_rgba(0,229,255,0.1)] border-primary/45"
               : "border-primary/20"

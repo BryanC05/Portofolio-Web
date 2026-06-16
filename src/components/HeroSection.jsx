@@ -39,15 +39,15 @@ export const HeroSection = () => {
           </span>
         </motion.div>
 
-        {/* Central Title: BRYAN CHAN PORTOFOLIO */}
+        {/* Central Title: BRYAN CHAN Portofolio */}
         <motion.h1 
           initial={{ opacity: 0, y: 30, skewX: -4 }}
           animate={{ opacity: 1, y: 0, skewX: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-5xl font-black uppercase tracking-tight text-foreground md:text-7xl lg:text-8xl p3r-skew inline-block leading-none"
+          className="text-5xl font-black tracking-tight text-foreground md:text-7xl lg:text-8xl p3r-skew inline-block leading-none"
         >
-          <span className="text-glow">BRYAN CHAN</span> <br />
-          <span className="p3r-gradient text-glow mt-2 inline-block">PORTOFOLIO</span>
+          <span className="text-glow uppercase">BRYAN CHAN</span> <br />
+          <span className="p3r-gradient text-glow mt-2 inline-block">Portofolio</span>
         </motion.h1>
 
         {/* Nav CTAs */}

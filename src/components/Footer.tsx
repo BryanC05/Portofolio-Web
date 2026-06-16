@@ -15,7 +15,7 @@ export const Footer = () => {
 
       <div className="container relative z-10">
         <div 
-          className="flex flex-col gap-4 border border-primary/20 bg-[rgba(8,18,34,0.8)] px-6 py-6 backdrop-blur-xl md:flex-row md:items-center md:justify-between"
+          className="flex flex-col gap-4 border border-primary/20 bg-[rgba(8,18,34,0.96)] px-6 py-6 md:flex-row md:items-center md:justify-between"
           style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 16px 100%)" }}
         >
           <div className="text-left">

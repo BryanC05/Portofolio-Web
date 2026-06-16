@@ -230,19 +230,19 @@
 }
 
 @utility p3r-panel {
-  @apply relative overflow-hidden border border-transparent bg-[rgba(8,18,34,0.8)] backdrop-blur-xl transition-all duration-300;
+  @apply relative overflow-hidden border border-transparent bg-[rgba(8,18,34,0.96)] transition-all duration-300;
   clip-path: polygon(0 0, 100% 0, calc(100% - 24px) 100%, 0 100%);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(0, 229, 255, 0.25);
 }
 
 @utility p3r-panel-alt {
-  @apply relative overflow-hidden border border-transparent bg-[rgba(8,18,34,0.8)] backdrop-blur-xl transition-all duration-300;
+  @apply relative overflow-hidden border border-transparent bg-[rgba(8,18,34,0.96)] transition-all duration-300;
   clip-path: polygon(24px 0, 100% 0, 100% 100%, 0 100%);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(0, 229, 255, 0.25);
 }
 
 @utility p3r-panel-diagonal {
-  @apply relative overflow-hidden border border-transparent bg-[rgba(8,18,34,0.8)] backdrop-blur-xl transition-all duration-300;
+  @apply relative overflow-hidden border border-transparent bg-[rgba(8,18,34,0.96)] transition-all duration-300;
   clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px));
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(0, 229, 255, 0.25);
 }
