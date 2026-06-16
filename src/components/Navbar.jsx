@@ -54,9 +54,6 @@ export const Navbar = () => {
               ? "shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_20px_rgba(0,229,255,0.1)] border-primary/45"
               : "border-primary/20"
           )}
-          style={{
-            clipPath: "polygon(0 0, 100% 0, calc(100% - 15px) 100%, 15px 100%)",
-          }}
         >
           {/* Logo / Monogram */}
           <a href="#hero" className="flex items-center gap-3 text-left group">
@@ -124,7 +121,6 @@ export const Navbar = () => {
           <button
             onClick={() => setIsMenuOpen((prev) => !prev)}
             className="inline-flex h-10 w-10 items-center justify-center border border-primary/30 bg-primary/5 text-foreground transition-colors hover:bg-primary/10 hover:text-primary md:hidden"
-            style={{ clipPath: "polygon(0 0, 100% 0, 100% 80%, 80% 100%, 0 100%)" }}
             aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
           >
             {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
@@ -136,10 +132,10 @@ export const Navbar = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)" }}
-            animate={{ opacity: 1, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
-            exit={{ opacity: 0, clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)" }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, scale: 0.95, y: -10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -10 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
             className="absolute inset-x-4 top-[calc(100%+0.5rem)] rounded-2xl border border-primary/35 bg-[rgba(5,13,26,0.96)] p-5 backdrop-blur-2xl md:hidden"
             style={{ boxShadow: "0 25px 60px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 229, 255, 0.15)" }}
           >

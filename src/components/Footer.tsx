@@ -16,7 +16,6 @@ export const Footer = () => {
       <div className="container relative z-10">
         <div 
           className="flex flex-col gap-4 border border-primary/20 bg-[rgba(8,18,34,0.96)] px-10 py-6 md:flex-row md:items-center md:justify-between"
-          style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 16px 100%)" }}
         >
           <div className="text-left">
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary text-glow">
@@ -35,7 +34,6 @@ export const Footer = () => {
             <a
               href="#hero"
               className="action-button-secondary py-2.5 px-4 text-glow"
-              style={{ clipPath: "polygon(8px 0, 100% 0, 100% 100%, 0 100%)" }}
             >
               UPWARD <ArrowUpRight size={13} className="ml-1" />
             </a>

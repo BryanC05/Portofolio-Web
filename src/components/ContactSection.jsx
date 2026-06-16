@@ -90,8 +90,7 @@ export const ContactSection = () => {
                   <a
                     key={label}
                     href={href}
-                    className="flex items-center gap-4 border border-primary/10 bg-primary/[0.03] p-4 transition-all duration-300 hover:border-primary/40 hover:bg-primary/[0.08]"
-                    style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%)" }}
+                    className="flex items-center gap-4 border border-primary/10 border-l-2 border-l-primary/40 bg-primary/[0.03] p-4 transition-all duration-300 hover:border-primary/40 hover:border-l-primary hover:bg-primary/[0.08]"
                   >
                     <span className="flex h-12 w-12 shrink-0 items-center justify-center border border-primary/30 bg-primary/10 text-primary transition-all duration-300 hover:bg-primary/25 animate-pulse-subtle"
                           style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
@@ -106,8 +105,7 @@ export const ContactSection = () => {
               })}
             </div>
 
-            <div className="border border-primary/10 bg-primary/[0.02] p-5 text-xs leading-5 text-muted-foreground/80"
-                 style={{ clipPath: "polygon(8px 0, 100% 0, 100% 100%, 0 100%)" }}>
+            <div className="border border-primary/10 border-l-2 border-l-accent bg-primary/[0.02] p-5 text-xs leading-5 text-muted-foreground/80">
               <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary mb-2">AVAILABILITY</p>
               Currently open to freelance opportunities, part-time roles, and project-based work with a focus on web development.
             </div>
@@ -152,8 +150,7 @@ export const ContactSection = () => {
                   onChange={handleChange}
                   required
                   placeholder="YOUR NAME"
-                  className="w-full border border-primary/25 bg-[rgba(8,18,34,0.65)] px-4 py-3 text-xs uppercase tracking-widest text-foreground placeholder:text-muted-foreground/40 transition-all duration-300 focus:border-primary focus:shadow-[0_0_15px_rgba(0,229,255,0.25)] focus:bg-[rgba(8,18,34,0.85)]"
-                  style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)" }}
+                  className="w-full border-t border-r border-b border-l-2 border-primary/25 border-l-primary/60 bg-[rgba(8,18,34,0.65)] px-4 py-3 text-xs uppercase tracking-widest text-foreground placeholder:text-muted-foreground/40 transition-all duration-300 focus:border-primary focus:border-l-primary focus:shadow-[0_0_15px_rgba(0,229,255,0.25)] focus:bg-[rgba(8,18,34,0.85)]"
                 />
               </label>
               <label className="space-y-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground">
@@ -165,8 +162,7 @@ export const ContactSection = () => {
                   onChange={handleChange}
                   required
                   placeholder="NAME@EXAMPLE.COM"
-                  className="w-full border border-primary/25 bg-[rgba(8,18,34,0.65)] px-4 py-3 text-xs uppercase tracking-widest text-foreground placeholder:text-muted-foreground/40 transition-all duration-300 focus:border-primary focus:shadow-[0_0_15px_rgba(0,229,255,0.25)] focus:bg-[rgba(8,18,34,0.85)]"
-                  style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)" }}
+                  className="w-full border-t border-r border-b border-l-2 border-primary/25 border-l-primary/60 bg-[rgba(8,18,34,0.65)] px-4 py-3 text-xs uppercase tracking-widest text-foreground placeholder:text-muted-foreground/40 transition-all duration-300 focus:border-primary focus:border-l-primary focus:shadow-[0_0_15px_rgba(0,229,255,0.25)] focus:bg-[rgba(8,18,34,0.85)]"
                 />
               </label>
             </div>
@@ -180,8 +176,7 @@ export const ContactSection = () => {
                 required
                 rows={7}
                 placeholder="SHARE YOUR PROJECT DETAILS, TIMELINE, OR ANY QUESTIONS YOU HAVE."
-                className="w-full resize-none border border-primary/25 bg-[rgba(8,18,34,0.65)] px-4 py-3 text-xs uppercase tracking-widest text-foreground placeholder:text-muted-foreground/40 transition-all duration-300 focus:border-primary focus:shadow-[0_0_15px_rgba(0,229,255,0.25)] focus:bg-[rgba(8,18,34,0.85)]"
-                style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)" }}
+                className="w-full resize-none border-t border-r border-b border-l-2 border-primary/25 border-l-primary/60 bg-[rgba(8,18,34,0.65)] px-4 py-3 text-xs uppercase tracking-widest text-foreground placeholder:text-muted-foreground/40 transition-all duration-300 focus:border-primary focus:border-l-primary focus:shadow-[0_0_15px_rgba(0,229,255,0.25)] focus:bg-[rgba(8,18,34,0.85)]"
               />
             </label>
 

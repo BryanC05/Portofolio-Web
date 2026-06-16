@@ -40,14 +40,11 @@ export const SkillsSection = () => {
                 <button
                   onClick={() => setActiveCategory(category)}
                   className={cn(
-                    "relative px-5 py-2 text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 cursor-pointer",
+                    "relative border-l-2 px-5 py-2 text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 cursor-pointer",
                     isActive
-                      ? "text-primary text-glow font-black"
-                      : "text-muted-foreground hover:text-primary"
+                      ? "text-primary text-glow font-black border-l-primary bg-primary/5"
+                      : "text-muted-foreground border-l-primary/10 hover:text-primary hover:border-l-primary"
                   )}
-                  style={{
-                    clipPath: "polygon(0 0, 100% 0, calc(100% - 6px) 100%, 0 100%)",
-                  }}
                 >
                   <span className="text-[9px] font-bold text-accent mr-1.5">0{index + 1}</span>
                   {category}
@@ -78,10 +75,7 @@ export const SkillsSection = () => {
                     animate={{ opacity: 1, y: 0, skewX: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.4, delay: index * 0.05 }}
-                    className="border border-primary/10 bg-primary/[0.03] p-4 text-left hover:border-primary/40 hover:bg-primary/[0.06] transition-all duration-300"
-                    style={{
-                      clipPath: "polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%)",
-                    }}
+                    className="border border-primary/10 border-l-2 border-l-primary/40 bg-primary/[0.03] p-4 text-left hover:border-primary/40 hover:border-l-primary hover:bg-primary/[0.06] transition-all duration-300"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div>
@@ -126,16 +120,14 @@ export const SkillsSection = () => {
                   "Use motion to guide attention, not distract from content.",
                   "Keep components reusable so redesigns stay maintainable.",
                 ].map((item, index) => (
-                  <div key={item} className="flex items-start gap-3 border border-primary/10 bg-primary/[0.02] px-4 py-3 text-xs leading-5 text-muted-foreground"
-                       style={{ clipPath: "polygon(8px 0, 100% 0, 100% 100%, 0 100%)" }}>
+                  <div key={item} className="flex items-start gap-3 border border-primary/10 border-l-2 border-l-accent/40 bg-primary/[0.02] px-4 py-3 text-xs leading-5 text-muted-foreground">
                     <span className="font-mono text-accent font-bold">0{index + 1} //</span>
                     <span>{item}</span>
                   </div>
                 ))}
               </div>
               
-              <div className="border border-primary/20 bg-primary/10 p-5"
-                   style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)" }}>
+              <div className="border border-primary/20 border-l-2 border-l-primary bg-primary/10 p-5">
                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent">BEST FIT</p>
                 <p className="mt-2 text-xs leading-6 text-foreground/90">
                   Portfolio sites, marketing surfaces, and interface-heavy products that need a cleaner visual system without sacrificing responsiveness.

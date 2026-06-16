@@ -68,7 +68,6 @@ export const HeroSection = () => {
           <a 
             href="#contact" 
             className="action-button-secondary flex-1 justify-center py-4 text-center"
-            style={{ clipPath: "polygon(12px 0, 100% 0, 100% 100%, 0 100%)" }}
           >
             LET'S TALK
           </a>

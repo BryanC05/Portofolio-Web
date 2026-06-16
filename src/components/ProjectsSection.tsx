@@ -67,8 +67,7 @@ export const ProjectsSection = () => {
           <Panel className="p-4 md:p-6" variant="default">
             <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr] pt-2">
               {/* Project Image wrapped in custom shear clip path */}
-              <div className="overflow-hidden border border-primary/20 bg-secondary/60 relative group cursor-pointer"
-                   style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)" }}
+              <div className="overflow-hidden border border-primary/20 border-l-2 border-l-primary bg-secondary/60 relative group cursor-pointer"
                    onClick={() => setSelectedImage({
                       images: (featured.images && featured.images.length > 0) ? featured.images : [featured.image],
                       currentIndex: 0,
@@ -124,9 +123,8 @@ export const ProjectsSection = () => {
                         Details <Info size={14} />
                       </button>
                     </DialogTrigger>
-                    <DialogContent className="max-w-2xl border-primary/35 bg-[rgba(6,14,28,0.95)] backdrop-blur-2xl text-foreground"
+                    <DialogContent className="max-w-2xl border-primary/35 border-l-2 border-l-primary bg-[rgba(6,14,28,0.95)] backdrop-blur-2xl text-foreground"
                                    style={{
-                                     clipPath: "polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%)",
                                      boxShadow: "0 0 40px rgba(0, 229, 255, 0.25)"
                                    }}>
                       <DialogHeader className="border-b border-primary/20 pb-4">
@@ -144,8 +142,7 @@ export const ProjectsSection = () => {
                           <>
                             <div className="grid gap-4 sm:grid-cols-2">
                               {featured.details.stack.map((group: any) => (
-                                <div key={group.category} className="border border-primary/15 bg-primary/5 p-4"
-                                     style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%)" }}>
+                                <div key={group.category} className="border border-primary/15 border-l-2 border-l-accent/50 bg-primary/5 p-4">
                                   <h4 className="text-xs font-bold uppercase tracking-wider text-accent mb-2">
                                     {group.category}
                                   </h4>
@@ -161,8 +158,7 @@ export const ProjectsSection = () => {
                               ))}
                             </div>
 
-                            <div className="border border-primary/15 bg-primary/5 p-4"
-                                 style={{ clipPath: "polygon(8px 0, 100% 0, 100% 100%, 0 100%)" }}>
+                            <div className="border border-primary/15 border-l-2 border-l-primary bg-primary/5 p-4">
                               <h4 className="text-xs font-bold uppercase tracking-wider text-primary mb-3">
                                 Local Development Setup
                               </h4>
@@ -201,8 +197,7 @@ export const ProjectsSection = () => {
             <Panel key={project.id} className="p-4" variant="alt">
               <div className="grid gap-4 sm:grid-cols-[110px_1fr] sm:items-center pt-1">
                 {/* Styled image with diagonal clip */}
-                <div className="overflow-hidden border border-primary/15 bg-secondary/80 cursor-pointer group relative"
-                     style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%)" }}
+                <div className="overflow-hidden border border-primary/15 border-l-2 border-l-primary bg-secondary/80 cursor-pointer group relative"
                      onClick={() => setSelectedImage({
                        images: (project.images && project.images.length > 0) ? project.images : [project.image],
                        currentIndex: 0,
@@ -265,9 +260,8 @@ export const ProjectsSection = () => {
       {/* Lightbox Image Preview Dialog */}
       <Dialog open={!!selectedImage} onOpenChange={(open) => !open && setSelectedImage(null)}>
         <DialogContent 
-          className="max-w-4xl border-primary/30 bg-[rgba(6,14,28,0.98)] text-foreground p-3"
+          className="max-w-4xl border-primary/30 border-l-2 border-l-primary bg-[rgba(6,14,28,0.98)] text-foreground p-3"
           style={{
-            clipPath: "polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%)",
             boxShadow: "0 0 50px rgba(0, 229, 255, 0.35)"
           }}
         >
@@ -285,8 +279,7 @@ export const ProjectsSection = () => {
               </div>
             </div>
             
-            <div className="relative w-full p-2 flex justify-center items-center bg-secondary/40 border border-primary/10 mt-3"
-                 style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)" }}>
+            <div className="relative w-full p-2 flex justify-center items-center bg-secondary/40 border border-primary/10 border-l-2 border-l-primary mt-3">
               
               {/* Left Arrow */}
               {selectedImage && selectedImage.images.length > 1 && (

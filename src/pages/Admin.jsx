@@ -398,7 +398,6 @@ export const Admin = () => {
                     value={passcode}
                     onChange={(e) => setPasscode(e.target.value)}
                     className="w-full border border-primary/25 bg-[rgba(8,18,34,0.65)] pl-10 pr-4 py-3.5 text-xs uppercase tracking-widest text-foreground placeholder:text-muted-foreground/35 transition-all duration-300 focus:border-primary focus:shadow-[0_0_15px_rgba(0,229,255,0.25)] focus:bg-[rgba(8,18,34,0.85)]"
-                    style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)" }}
                   />
                 </div>
               </div>
@@ -425,7 +424,6 @@ export const Admin = () => {
             <a 
               href="/"
               className="flex h-10 w-10 items-center justify-center border border-primary/30 bg-primary/5 text-foreground hover:bg-primary/20 hover:text-primary transition-colors cursor-pointer"
-              style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
             >
               <ArrowLeft size={16} />
             </a>
@@ -467,10 +465,9 @@ export const Admin = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative flex items-center gap-2 px-5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-300 cursor-pointer ${
-                  isActive ? "text-primary text-glow font-black" : "text-muted-foreground hover:text-primary"
+                className={`relative flex items-center gap-2 border-l-2 px-5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-300 cursor-pointer ${
+                  isActive ? "text-primary text-glow font-black border-l-primary bg-primary/5" : "text-muted-foreground border-l-primary/10 hover:text-primary hover:border-l-primary"
                 }`}
-                style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 6px) 100%, 0 100%)" }}
               >
                 <Icon size={14} />
                 {tab.label}
@@ -505,7 +502,6 @@ export const Admin = () => {
                         value={editedData.profile.name}
                         onChange={(e) => updateProfileField("name", e.target.value)}
                         className="w-full border border-primary/25 bg-[rgba(8,18,34,0.65)] px-4 py-3 text-xs uppercase tracking-widest text-foreground focus:border-primary focus:shadow-[0_0_15px_rgba(0,229,255,0.25)] focus:bg-[rgba(8,18,34,0.85)]"
-                        style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)" }}
                       />
                     </label>
 
@@ -516,7 +512,6 @@ export const Admin = () => {
                         value={editedData.profile.location}
                         onChange={(e) => updateProfileField("location", e.target.value)}
                         className="w-full border border-primary/25 bg-[rgba(8,18,34,0.65)] px-4 py-3 text-xs uppercase tracking-widest text-foreground focus:border-primary focus:shadow-[0_0_15px_rgba(0,229,255,0.25)] focus:bg-[rgba(8,18,34,0.85)]"
-                        style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)" }}
                       />
                     </label>
                   </div>
@@ -529,7 +524,6 @@ export const Admin = () => {
                         value={editedData.profile.seesBadge}
                         onChange={(e) => updateProfileField("seesBadge", e.target.value)}
                         className="w-full border border-primary/25 bg-[rgba(8,18,34,0.65)] px-4 py-3 text-xs uppercase tracking-widest text-foreground focus:border-primary focus:shadow-[0_0_15px_rgba(0,229,255,0.25)] focus:bg-[rgba(8,18,34,0.85)]"
-                        style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)" }}
                       />
                     </label>
 
@@ -540,7 +534,6 @@ export const Admin = () => {
                         value={editedData.profile.status}
                         onChange={(e) => updateProfileField("status", e.target.value)}
                         className="w-full border border-primary/25 bg-[rgba(8,18,34,0.65)] px-4 py-3 text-xs uppercase tracking-widest text-foreground focus:border-primary focus:shadow-[0_0_15px_rgba(0,229,255,0.25)] focus:bg-[rgba(8,18,34,0.85)]"
-                        style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)" }}
                       />
                     </label>
                   </div>
@@ -552,7 +545,6 @@ export const Admin = () => {
                       value={editedData.profile.headline}
                       onChange={(e) => updateProfileField("headline", e.target.value)}
                       className="w-full border border-primary/25 bg-[rgba(8,18,34,0.65)] px-4 py-3 text-xs uppercase tracking-widest text-foreground focus:border-primary focus:shadow-[0_0_15px_rgba(0,229,255,0.25)] focus:bg-[rgba(8,18,34,0.85)]"
-                      style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)" }}
                     />
                   </label>
 
@@ -563,7 +555,6 @@ export const Admin = () => {
                       value={editedData.profile.description}
                       onChange={(e) => updateProfileField("description", e.target.value)}
                       className="w-full resize-none border border-primary/25 bg-[rgba(8,18,34,0.65)] px-4 py-3 text-xs uppercase tracking-widest text-foreground focus:border-primary focus:shadow-[0_0_15px_rgba(0,229,255,0.25)] focus:bg-[rgba(8,18,34,0.85)]"
-                      style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%)" }}
                     />
                   </label>
 
@@ -574,7 +565,6 @@ export const Admin = () => {
                       value={editedData.philosophy}
                       onChange={(e) => setEditedData(prev => ({ ...prev, philosophy: e.target.value }))}
                       className="w-full resize-none border border-primary/25 bg-[rgba(8,18,34,0.65)] px-4 py-3 text-xs uppercase tracking-widest text-foreground focus:border-primary focus:shadow-[0_0_15px_rgba(0,229,255,0.25)] focus:bg-[rgba(8,18,34,0.85)]"
-                      style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%)" }}
                     />
                   </label>
                 </div>
@@ -604,7 +594,6 @@ export const Admin = () => {
                       <div 
                         key={`${skill.name}-${index}`} 
                         className="flex flex-col gap-4 md:flex-row md:items-center border border-primary/10 bg-primary/5 p-4 rounded-lg relative group"
-                        style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%)" }}
                       >
                         <div className="grid gap-4 grid-cols-2 md:grid-cols-4 flex-1">
                           <label className="space-y-1 text-[10px] font-bold text-muted-foreground">
@@ -654,7 +643,6 @@ export const Admin = () => {
                         <button 
                           onClick={() => deleteSkill("all", index)}
                           className="h-9 w-9 flex items-center justify-center border border-red-500/35 text-red-400 bg-red-500/5 hover:bg-red-500 hover:text-white transition-colors shrink-0"
-                          style={{ clipPath: "polygon(0 0, 100% 0, 100% 80%, 80% 100%, 0 100%)" }}
                         >
                           <Trash2 size={14} />
                         </button>
@@ -697,7 +685,6 @@ export const Admin = () => {
                           <button 
                             onClick={() => deleteProject(project.id)}
                             className="flex h-8 items-center justify-center gap-1.5 px-3 border border-red-500/30 text-red-400 bg-red-500/5 hover:bg-red-500 hover:text-white transition-colors text-[10px] uppercase font-bold"
-                            style={{ clipPath: "polygon(0 0, 100% 0, 100% 80%, 80% 100%, 0 100%)" }}
                           >
                             <Trash2 size={12} /> Remove
                           </button>
@@ -763,7 +750,7 @@ export const Admin = () => {
                             {((project.images && project.images.length > 0) ? project.images : [project.image || ""]).map((img, imgIdx) => (
                               <div key={imgIdx} className="grid gap-3 sm:grid-cols-[80px_1fr_40px] items-center border border-primary/10 bg-primary/5 p-2 rounded">
                                 <div className="h-12 border border-primary/15 bg-secondary/80 overflow-hidden relative"
-                                     style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 4px) 100%, 0 100%)" }}>
+                                     >
                                   {img ? (
                                     <img src={img} alt={`Gallery ${imgIdx}`} className="h-full w-full object-cover" />
                                   ) : (
@@ -896,8 +883,7 @@ export const Admin = () => {
 
                   <div className="grid gap-6 md:grid-cols-2">
                     {/* Passcode Reset */}
-                    <div className="border border-primary/15 bg-primary/5 p-5 space-y-4"
-                         style={{ clipPath: "polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%)" }}>
+                    <div className="border border-primary/15 border-l-2 border-l-primary bg-primary/5 p-5 space-y-4">
                       <h4 className="text-xs font-bold uppercase text-glow text-primary flex items-center gap-1.5">
                         <Key size={12} /> SECURE GATE ACCESS
                       </h4>
@@ -919,8 +905,7 @@ export const Admin = () => {
                     </div>
 
                     {/* Config files upload */}
-                    <div className="border border-primary/15 bg-primary/5 p-5 space-y-4"
-                         style={{ clipPath: "polygon(10px 0, 100% 0, 100% 100%, 0 100%)" }}>
+                    <div className="border border-primary/15 border-l-2 border-l-accent bg-primary/5 p-5 space-y-4">
                       <h4 className="text-xs font-bold uppercase text-glow text-accent flex items-center gap-1.5">
                         <FileText size={12} /> RESTORE FROM CONFIG
                       </h4>

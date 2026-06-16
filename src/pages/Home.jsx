@@ -52,8 +52,7 @@ export const Home = () => {
                 transition={{ duration: 0.4, delay: 0.3 }}
                 className="flex flex-col items-center p3r-skew-cancel"
               >
-                <div className="border border-primary bg-primary/10 px-8 py-4 mb-4"
-                     style={{ clipPath: "polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%)" }}>
+                <div className="border border-primary/40 border-l-4 border-l-primary bg-primary/10 px-8 py-4 mb-4">
                   <span className="text-3xl font-black tracking-[0.3em] text-primary text-glow">RELOAD</span>
                 </div>
                 <span className="text-[10px] font-bold tracking-[0.4em] text-accent">Bryan Chan Portfolio // SYSTEM INIT</span>
