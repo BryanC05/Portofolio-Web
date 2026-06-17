@@ -17,9 +17,13 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   useEffect(() => {
     const loadData = async () => {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 1500); // 1.5 second API timeout
+
       try {
         setLoading(true);
-        const res = await fetch("/api/portfolio");
+        const res = await fetch("/api/portfolio", { signal: controller.signal });
+        clearTimeout(timeoutId);
         if (!res.ok) {
           throw new Error(`Failed to load data: ${res.statusText}`);
         }
@@ -29,8 +33,9 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
           localStorage.setItem("portfolio_data_cache", JSON.stringify(jsonData));
         }
       } catch (err: any) {
-        console.warn("API load failed, falling back to local cache or defaults:", err);
-        setError(err.message);
+        clearTimeout(timeoutId);
+        console.warn("API load failed or timed out, falling back to local cache or defaults:", err);
+        setError(err.message || String(err));
         
         const cache = localStorage.getItem("portfolio_data_cache");
         if (cache) {
