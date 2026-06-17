@@ -8,17 +8,21 @@ import { ContactSection } from "@/components/ContactSection";
 import { Footer } from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import { usePortfolioData } from "@/hooks/usePortfolioData";
 
 export const Home = () => {
-  const [loading, setLoading] = useState(true);
+  const { loading: dataLoading } = usePortfolioData();
+  const [minTimeElapsed, setMinTimeElapsed] = useState(false);
 
   useEffect(() => {
-    // Mimic quick loading of assets/menu initial sequence
+    // 1200ms minimum duration for intro animation to look polished and not flash
     const timer = setTimeout(() => {
-      setLoading(false);
+      setMinTimeElapsed(true);
     }, 1200);
     return () => clearTimeout(timer);
   }, []);
+
+  const loading = dataLoading || !minTimeElapsed;
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#070e17] text-foreground">
@@ -53,7 +57,7 @@ export const Home = () => {
                 className="flex flex-col items-center p3r-skew-cancel"
               >
                 <div className="border border-primary/40 border-l-4 border-l-primary bg-primary/10 px-8 py-4 mb-4">
-                  <span className="text-3xl font-black tracking-[0.3em] text-primary text-glow">RELOAD</span>
+                  <span className="text-3xl font-black tracking-[0.3em] text-primary text-glow">HELLO !!</span>
                 </div>
                 <span className="text-[10px] font-bold tracking-[0.4em] text-accent">Bryan Chan Portfolio // SYSTEM INIT</span>
               </motion.div>

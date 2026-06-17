@@ -19,9 +19,12 @@ export const HeroSection = () => {
 
   return (
     <section id="hero" className="relative px-4 pb-24 pt-36 sm:pt-40 lg:pb-32 lg:pt-48 overflow-hidden flex flex-col items-center justify-center text-center">
-      {/* Background XXII (Fool Arcana) watermark text */}
-      <div className="absolute right-[10%] top-[15%] select-none pointer-events-none font-bold text-[20vw] leading-none text-primary/[0.015] tracking-tighter uppercase font-mono z-0">
-        XXII
+      {/* Background BRYAN CHAN watermark text */}
+      <div 
+        className="fixed right-[5%] top-[15%] select-none pointer-events-none font-bold text-[10vw] leading-none text-primary/[0.015] tracking-tighter uppercase font-mono z-0"
+        style={{ willChange: "transform", transform: "translate3d(0,0,0)" }}
+      >
+        BRYAN CHAN
       </div>
 
       <div className="container max-w-4xl relative z-10 space-y-10 flex flex-col items-center">

@@ -3,10 +3,11 @@ import { Home } from "./pages/Home";
 import { Admin } from "./pages/Admin";
 import { NotFound } from "./pages/NotFound";
 import { Toaster } from "@/components/ui/toaster";
+import { PortfolioProvider } from "@/context/PortfolioContext";
 
 function App() {
   return (
-    <>
+    <PortfolioProvider>
       <Toaster />
       <BrowserRouter>
         <Routes>
@@ -15,7 +16,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </PortfolioProvider>
   );
 }
 

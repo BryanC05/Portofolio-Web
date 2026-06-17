@@ -72,7 +72,7 @@ export const StarBackground = () => {
         {shapes.map((shape) => (
           <div
             key={`shape-${shape.id}`}
-            className="absolute opacity-10 border border-primary/30 transition-all animate-p3r-float"
+            className="absolute opacity-10 border border-primary/30 animate-p3r-float"
             style={{
               width: shape.size,
               height: shape.type === "card" ? shape.size * 1.4 : shape.size,
