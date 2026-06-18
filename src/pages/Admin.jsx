@@ -4,10 +4,95 @@ import { Panel } from "@/components/Panel";
 import { StarBackground } from "@/components/StarBackground";
 import { 
   Save, ArrowLeft, Plus, Trash2, Key, Download, Upload, Image, 
-  FileText, Shield, User, Award, FolderOpen, Mail 
+  FileText, Shield, User, Award, FolderOpen, Mail, Sparkles 
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
+
+const compressImage = (file, maxWidth = 1200, maxHeight = 1200, quality = 0.7) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new window.Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+          reject(new Error("Failed to get 2D context"));
+          return;
+        }
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const compressedBase64 = canvas.toDataURL("image/jpeg", quality);
+        resolve(compressedBase64);
+      };
+      img.onerror = (err) => reject(err);
+    };
+    reader.onerror = (err) => reject(err);
+  });
+};
+
+const compressImageFromBase64 = (base64Str, maxWidth = 1200, maxHeight = 1200, quality = 0.7) => {
+  return new Promise((resolve, reject) => {
+    if (!base64Str || !base64Str.startsWith("data:image/")) {
+      resolve(base64Str);
+      return;
+    }
+    const img = new window.Image();
+    img.src = base64Str;
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      let width = img.width;
+      let height = img.height;
+
+      if (width > height) {
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+      } else {
+        if (height > maxHeight) {
+          width = Math.round((width * maxHeight) / height);
+          height = maxHeight;
+        }
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        reject(new Error("Failed to get 2D context"));
+        return;
+      }
+      ctx.drawImage(img, 0, 0, width, height);
+
+      const compressed = canvas.toDataURL("image/jpeg", quality);
+      resolve(compressed);
+    };
+    img.onerror = (err) => reject(err);
+  });
+};
 
 export const Admin = () => {
   const { data, loading, saveData } = usePortfolioData();
@@ -39,6 +124,67 @@ export const Admin = () => {
     toast({ title: "SEES Auth Success", description: "System Access Unlocked // Welcome Bryan" });
   };
 
+  const handleOptimizeAll = async () => {
+    if (!editedData || !editedData.projects) return;
+
+    toast({ 
+      title: "Optimization Initiated", 
+      description: "Compressing and optimizing all existing base64 images in your portfolio config. Please wait..." 
+    });
+
+    const originalSize = JSON.stringify(editedData).length;
+    let optimizedCount = 0;
+    
+    try {
+      const newProjects = await Promise.all(editedData.projects.map(async (project) => {
+        const copyProj = { ...project };
+        
+        // Optimize cover image if base64
+        if (copyProj.image && copyProj.image.startsWith("data:image/")) {
+          copyProj.image = await compressImageFromBase64(copyProj.image);
+          optimizedCount++;
+        }
+        
+        // Optimize gallery images
+        if (copyProj.images && copyProj.images.length > 0) {
+          copyProj.images = await Promise.all(copyProj.images.map(async (img) => {
+            if (img && img.startsWith("data:image/")) {
+              optimizedCount++;
+              return await compressImageFromBase64(img);
+            }
+            return img;
+          }));
+        }
+        
+        return copyProj;
+      }));
+
+      const newConfig = {
+        ...editedData,
+        projects: newProjects
+      };
+
+      const optimizedSize = JSON.stringify(newConfig).length;
+      
+      setEditedData(newConfig);
+
+      const savedKB = ((originalSize - optimizedSize) / 1024).toFixed(0);
+      const currentKB = (optimizedSize / 1024).toFixed(0);
+      
+      toast({
+        title: "Optimization Complete",
+        description: `Successfully optimized ${optimizedCount} images. Reduced configuration size by ${savedKB}KB. New size: ${currentKB}KB. Click 'Commit Overwrite' to save changes!`,
+      });
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: "Optimization Failed",
+        description: "An error occurred while optimizing images: " + err.message,
+        variant: "destructive"
+      });
+    }
+  };
+
   const handleSave = async () => {
     if (!passcode) {
       toast({ title: "Authorization Error", description: "Passcode is missing.", variant: "destructive" });
@@ -51,7 +197,7 @@ export const Admin = () => {
       const isCritical = payloadSize > 4 * 1024 * 1024;
       toast({ 
         title: isCritical ? "Payload Too Large" : "Large Configuration Detected", 
-        description: `Config size: ${(payloadSize / 1024).toFixed(0)}KB. ${isCritical ? "This exceeds Vercel limits (4.5MB)." : "This may exceed Vercel KV free tier limits (1MB)."} Consider using external image URLs instead of Base64.`, 
+        description: `Config size: ${(payloadSize / 1024).toFixed(0)}KB. ${isCritical ? "This exceeds Vercel limits (4.5MB)." : "This may exceed Vercel KV free tier limits (1MB)."} Click the 'Optimize Images' button at the top to compress your base64 images, or use external image URLs.`, 
         variant: isCritical ? "destructive" : "default"
       });
       if (isCritical) return;
@@ -159,64 +305,120 @@ export const Admin = () => {
     });
   };
 
-  // Base64 file uploader reader
-  const handleImageUpload = (projId, file) => {
+  // Base64 file uploader reader with client-side compression
+  const handleImageUpload = async (projId, file) => {
     if (!file) return;
     
-    // Check file size (< 800KB recommended for KV storage)
-    if (file.size > 0.8 * 1024 * 1024) {
+    toast({ title: "Processing Image", description: "Optimizing and compressing image..." });
+
+    try {
+      const compressedBase64 = await compressImage(file, 1200, 1200, 0.75);
+      updateProjectField(projId, "image", compressedBase64);
+      
+      const originalKB = (file.size / 1024).toFixed(0);
+      const compressedKB = (compressedBase64.length * 0.75 / 1024).toFixed(0);
+      
       toast({ 
-        title: "File Too Large", 
-        description: "Images should be smaller than 800KB to stay within database limits. Please compress your image or use an external URL.", 
+        title: "Image Loaded", 
+        description: `Compressed successfully from ${originalKB}KB to ${compressedKB}KB!` 
+      });
+    } catch (err) {
+      console.error(err);
+      toast({ 
+        title: "Compression Failed", 
+        description: "Could not optimize image. Falling back to original resolution.", 
         variant: "destructive" 
       });
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      if (e.target?.result) {
-        updateProjectField(projId, "image", e.target.result);
-        toast({ title: "Image Loaded", description: "Image converted to Base64 successfully!" });
+      
+      if (file.size > 0.8 * 1024 * 1024) {
+        toast({ 
+          title: "File Too Large", 
+          description: "Images must be smaller than 800KB.", 
+          variant: "destructive" 
+        });
+        return;
       }
-    };
-    reader.readAsDataURL(file);
+      
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target?.result) {
+          updateProjectField(projId, "image", e.target.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
-  const handleProjectGalleryUpload = (projId, file) => {
+  const handleProjectGalleryUpload = async (projId, file) => {
     if (!file) return;
     
-    if (file.size > 0.8 * 1024 * 1024) {
+    toast({ title: "Processing Image", description: "Optimizing and compressing image..." });
+
+    try {
+      const compressedBase64 = await compressImage(file, 1200, 1200, 0.75);
+      
+      setEditedData(prev => {
+        const copy = { ...prev };
+        const pIdx = copy.projects.findIndex(p => p.id === projId);
+        if (pIdx !== -1) {
+          const p = copy.projects[pIdx];
+          if (!p.images) {
+            p.images = p.image ? [p.image] : [];
+          }
+          p.images.push(compressedBase64);
+          if (p.images.length === 1) {
+            p.image = p.images[0];
+          }
+        }
+        return copy;
+      });
+
+      const originalKB = (file.size / 1024).toFixed(0);
+      const compressedKB = (compressedBase64.length * 0.75 / 1024).toFixed(0);
+      
       toast({ 
-        title: "File Too Large", 
-        description: "Images should be smaller than 800KB.", 
+        title: "Image Uploaded", 
+        description: `Added to project gallery. Compressed from ${originalKB}KB to ${compressedKB}KB!` 
+      });
+    } catch (err) {
+      console.error(err);
+      toast({ 
+        title: "Compression Failed", 
+        description: "Could not optimize image. Falling back to original resolution.", 
         variant: "destructive" 
       });
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      if (e.target?.result) {
-        setEditedData(prev => {
-          const copy = { ...prev };
-          const pIdx = copy.projects.findIndex(p => p.id === projId);
-          if (pIdx !== -1) {
-            const p = copy.projects[pIdx];
-            if (!p.images) {
-              p.images = p.image ? [p.image] : [];
-            }
-            p.images.push(e.target.result);
-            if (p.images.length === 1) {
-              p.image = p.images[0];
-            }
-          }
-          return copy;
+      
+      if (file.size > 0.8 * 1024 * 1024) {
+        toast({ 
+          title: "File Too Large", 
+          description: "Images must be smaller than 800KB.", 
+          variant: "destructive" 
         });
-        toast({ title: "Image Uploaded", description: "Added to project gallery." });
+        return;
       }
-    };
-    reader.readAsDataURL(file);
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target?.result) {
+          setEditedData(prev => {
+            const copy = { ...prev };
+            const pIdx = copy.projects.findIndex(p => p.id === projId);
+            if (pIdx !== -1) {
+              const p = copy.projects[pIdx];
+              if (!p.images) {
+                p.images = p.image ? [p.image] : [];
+              }
+              p.images.push(e.target.result);
+              if (p.images.length === 1) {
+                p.image = p.images[0];
+              }
+            }
+            return copy;
+          });
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const updateProjectGalleryImage = (projId, imgIdx, value) => {
@@ -453,6 +655,13 @@ export const Admin = () => {
           </div>
 
           <div className="flex flex-wrap gap-2">
+            <button 
+              onClick={handleOptimizeAll} 
+              className="border border-amber-500/30 text-amber-400 bg-amber-500/5 hover:bg-amber-500 hover:text-black transition-colors py-2.5 px-4 text-xs font-bold uppercase tracking-widest flex items-center cursor-pointer"
+            >
+              <Sparkles size={14} className="mr-1 animate-pulse" /> Optimize Images
+            </button>
+
             <button onClick={exportData} className="action-button-secondary py-2.5 px-4">
               <Download size={14} className="mr-1" /> Export config
             </button>
