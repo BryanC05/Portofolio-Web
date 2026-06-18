@@ -85,6 +85,10 @@ export default async function handler(req, res) {
     try {
       const { passcode, data } = req.body;
 
+      // Log payload size for debugging
+      const payloadSize = JSON.stringify(req.body || {}).length;
+      console.log(`POST /api/portfolio - Payload size: ${(payloadSize / 1024).toFixed(2)} KB`);
+
       // Validate passcode (defaults to admin123 if environment variable not set)
       const adminPasscode = process.env.ADMIN_PASSCODE || "admin123";
       if (passcode !== adminPasscode) {
@@ -116,7 +120,11 @@ export default async function handler(req, res) {
       return res.status(200).json({ success: true, message: "Saved to Vercel KV successfully!" });
     } catch (err) {
       console.error("Vercel KV Save failed:", err);
-      return res.status(500).json({ error: err.message });
+      let errorMessage = err.message;
+      if (errorMessage === "fetch failed") {
+        errorMessage = "Database connection failed or timed out. This often happens if the payload (images) is too large for the KV store limit (1MB).";
+      }
+      return res.status(500).json({ error: errorMessage });
     }
   }
 

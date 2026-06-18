@@ -18,7 +18,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   useEffect(() => {
     const loadData = async () => {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 1500); // 1.5 second API timeout
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second API timeout
 
       try {
         setLoading(true);

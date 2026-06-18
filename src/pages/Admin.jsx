@@ -45,6 +45,18 @@ export const Admin = () => {
       return;
     }
 
+    // Check total payload size (Vercel Serverless limit is 4.5MB, Upstash Free is 1MB)
+    const payloadSize = JSON.stringify(editedData).length;
+    if (payloadSize > 950 * 1024) { 
+      const isCritical = payloadSize > 4 * 1024 * 1024;
+      toast({ 
+        title: isCritical ? "Payload Too Large" : "Large Configuration Detected", 
+        description: `Config size: ${(payloadSize / 1024).toFixed(0)}KB. ${isCritical ? "This exceeds Vercel limits (4.5MB)." : "This may exceed Vercel KV free tier limits (1MB)."} Consider using external image URLs instead of Base64.`, 
+        variant: isCritical ? "destructive" : "default"
+      });
+      if (isCritical) return;
+    }
+
     setSaving(true);
     const result = await saveData(editedData, passcode);
     setSaving(false);
@@ -151,11 +163,11 @@ export const Admin = () => {
   const handleImageUpload = (projId, file) => {
     if (!file) return;
     
-    // Check file size (< 2MB recommended for performance)
-    if (file.size > 2 * 1024 * 1024) {
+    // Check file size (< 800KB recommended for KV storage)
+    if (file.size > 0.8 * 1024 * 1024) {
       toast({ 
         title: "File Too Large", 
-        description: "Images must be smaller than 2MB to keep configurations compact.", 
+        description: "Images should be smaller than 800KB to stay within database limits. Please compress your image or use an external URL.", 
         variant: "destructive" 
       });
       return;
@@ -174,10 +186,10 @@ export const Admin = () => {
   const handleProjectGalleryUpload = (projId, file) => {
     if (!file) return;
     
-    if (file.size > 2 * 1024 * 1024) {
+    if (file.size > 0.8 * 1024 * 1024) {
       toast({ 
         title: "File Too Large", 
-        description: "Images must be smaller than 2MB.", 
+        description: "Images should be smaller than 800KB.", 
         variant: "destructive" 
       });
       return;
